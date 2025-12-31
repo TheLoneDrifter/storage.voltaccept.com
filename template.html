@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoltaTECH Storage - File Explorer</title>
+  <title>VoltaTECH CloudDrive</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     * {
@@ -1536,6 +1536,49 @@
       font-size: 12px;
       font-weight: 600;
     }
+
+    /* Add to your existing CSS */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .audio-player-btn.play.playing {
+      animation: pulse 2s infinite;
+    }
+
+    .audio-cover.playing {
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .audio-player-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .audio-player-btn:disabled:hover {
+      transform: none;
+      background: rgba(255, 255, 255, 0.1);
+    }
   </style>
 </head>
 
@@ -1543,7 +1586,7 @@
   <!-- Login container separate from file explorer -->
   <div id="loginSection" class="login-container">
     <div class="login-form">
-      <h2>Login to Continue</h2>
+      <h2>Login to CloudDrive</h2>
 
       <div class="error-message" id="errorMessage"></div>
 
@@ -2103,7 +2146,35 @@
     const audioProgressBar = document.getElementById('audioProgressBar');
     const volumeSlider = document.getElementById('volumeSlider');
 
-    closeAudioPlayerBtn.addEventListener('click', closeAudioPlayer);
+    // Update the close button event listener
+    closeAudioPlayerBtn.addEventListener('click', () => {
+      // Create a custom close function
+      const handleClose = () => {
+        // Stop and reset audio
+        audioElement.pause();
+        audioElement.currentTime = 0;
+
+        // Clear source and revoke URL
+        audioElement.src = '';
+        if (currentAudioObjectUrl) {
+          URL.revokeObjectURL(currentAudioObjectUrl);
+          currentAudioObjectUrl = null;
+        }
+
+        // Reset UI
+        isPlaying = false;
+        playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+        document.getElementById('audioProgressFill').style.width = '0%';
+        document.getElementById('audioCurrentTime').textContent = '0:00';
+        document.getElementById('audioDuration').textContent = '0:00';
+
+        // Hide modal
+        audioPlayerModal.classList.remove('show');
+      };
+
+      handleClose();
+    });
+
     playPauseBtn.addEventListener('click', togglePlayPause);
     prevBtn.addEventListener('click', playPrevious);
     nextBtn.addEventListener('click', playNext);
@@ -2265,13 +2336,25 @@
         const lastModified = prop.getElementsByTagNameNS('DAV:', 'getlastmodified')[0]?.textContent || '';
 
         const decodedHref = decodeURIComponent(href);
+
+        // Skip the current directory (first item)
         if (i === 0) continue;
 
-        const name = decodedHref.split('/').filter(Boolean).pop();
+        // Extract just the name from the path
+        const pathParts = decodedHref.split('/').filter(Boolean);
+        const name = pathParts.pop() || pathParts.pop(); // Get last non-empty part
+
+        // Clean the href - remove leading /webdav/ if present
+        let cleanHref = decodedHref;
+        if (cleanHref.startsWith('/webdav/')) {
+          cleanHref = cleanHref.substring(8); // Remove '/webdav/'
+        } else if (cleanHref.startsWith('webdav/')) {
+          cleanHref = cleanHref.substring(7); // Remove 'webdav/'
+        }
 
         items.push({
-          name,
-          href: decodedHref,
+          name: name || 'Unnamed',
+          href: cleanHref, // Clean href without /webdav/
           isDirectory: isCollection,
           size: parseInt(contentLength),
           modified: new Date(lastModified)
@@ -2280,7 +2363,6 @@
 
       return items;
     }
-
     // Display files in the list
     function displayFiles(items) {
       if (items.length === 0) {
@@ -2733,12 +2815,23 @@
       if (!contextMenuItem) return;
 
       try {
-        const url = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
+        // Check if href already contains /webdav/
+        let url;
+        if (contextMenuItem.href.includes('/webdav/')) {
+          // If href already contains /webdav/, use it as is
+          url = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
+        } else {
+          // Otherwise, construct the full path
+          url = WEBDAV_URL + contextMenuItem.href;
+        }
+
+        console.log('Download URL:', url); // For debugging
+
         const response = await fetch(url, {
           headers: { 'Authorization': `Basic ${credentials}` }
         });
 
-        if (!response.ok) throw new Error('Download failed');
+        if (!response.ok) throw new Error('Download failed: ' + response.status);
 
         const blob = await response.blob();
         const downloadUrl = window.URL.createObjectURL(blob);
@@ -2752,6 +2845,7 @@
 
         showNotification('File downloaded successfully', 'success');
       } catch (error) {
+        console.error('Download error:', error);
         showNotification('Error downloading file: ' + error.message, 'error');
       }
     }
@@ -2816,7 +2910,10 @@
     }
 
     async function getAllFilesInDirectory(path, files = []) {
-      const url = WEBDAV_URL + path;
+      // Remove /webdav/ from path if present
+      const cleanPath = path.includes('/webdav/') ? path.replace('/webdav/', '') : path;
+      const url = WEBDAV_URL + cleanPath;
+
       const response = await fetch(url, {
         method: 'PROPFIND',
         headers: {
@@ -2857,10 +2954,28 @@
     }
 
     function closeAudioPlayer() {
-      audioPlayerModal.classList.remove('show');
+      // Pause audio
       audioElement.pause();
       isPlaying = false;
+
+      // Reset audio element
+      audioElement.currentTime = 0;
+      audioElement.src = '';
+
+      // Revoke Object URL to free memory
+      if (currentAudioObjectUrl) {
+        URL.revokeObjectURL(currentAudioObjectUrl);
+        currentAudioObjectUrl = null;
+      }
+
+      // Update UI
       playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+      document.getElementById('audioProgressFill').style.width = '0%';
+      document.getElementById('audioCurrentTime').textContent = '0:00';
+      document.getElementById('audioDuration').textContent = '0:00';
+
+      // Hide modal
+      audioPlayerModal.classList.remove('show');
     }
 
     async function loadAudioFilesInDirectory() {
@@ -2901,26 +3016,100 @@
       return audioExtensions.includes(ext);
     }
 
+    let currentAudioObjectUrl = null;
+
     async function playAudioFile(fileItem) {
       try {
-        const url = WEBDAV_URL + fileItem.href.replace('/webdav/', '');
+        // Check if href already contains /webdav/
+        let url;
+        if (fileItem.href.includes('/webdav/')) {
+          // If href already contains /webdav/, use it as is
+          url = WEBDAV_URL + fileItem.href.replace('/webdav/', '');
+        } else {
+          // Otherwise, construct the full path
+          url = WEBDAV_URL + fileItem.href;
+        }
+
+        console.log('Audio URL:', url); // For debugging
+
+        // Create AbortController for better fetch control
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        // Revoke previous Object URL if exists
+        if (currentAudioObjectUrl) {
+          URL.revokeObjectURL(currentAudioObjectUrl);
+          currentAudioObjectUrl = null;
+        }
+
+        // Pause and reset audio element
+        audioElement.pause();
+        audioElement.currentTime = 0;
+        audioElement.src = '';
+
+        // Fetch the audio file
         const response = await fetch(url, {
-          headers: { 'Authorization': `Basic ${credentials}` }
+          headers: { 'Authorization': `Basic ${credentials}` },
+          signal: signal
         });
 
-        if (!response.ok) throw new Error('Failed to load audio');
+        if (!response.ok) throw new Error('Failed to load audio: ' + response.status);
 
         const blob = await response.blob();
-        const objectUrl = URL.createObjectURL(blob);
+        currentAudioObjectUrl = URL.createObjectURL(blob);
 
-        audioElement.src = objectUrl;
+        // Set up audio element
+        audioElement.src = currentAudioObjectUrl;
         document.getElementById('audioPlayerTitle').textContent = fileItem.name;
 
-        // When audio metadata is loaded, it will trigger loadedmetadata event
+        // Set audio cover based on file type
+        const audioCover = document.getElementById('audioCover');
+        const fileExt = fileItem.name.split('.').pop().toLowerCase();
+        const coverIcons = {
+          'mp3': '<i class="bi bi-file-earmark-music"></i>',
+          'wav': '<i class="bi bi-file-earmark-music"></i>',
+          'ogg': '<i class="bi bi-file-earmark-music"></i>',
+          'm4a': '<i class="bi bi-file-earmark-music"></i>',
+          'flac': '<i class="bi bi-file-earmark-music-fill"></i>'
+        };
+        audioCover.innerHTML = coverIcons[fileExt] || '<i class="bi bi-music-note-beamed"></i>';
+
+        // Try to play automatically
+        setTimeout(() => {
+          audioElement.play().catch(e => {
+            console.log('Autoplay prevented:', e.message);
+          });
+        }, 100);
+
       } catch (error) {
-        showNotification('Error loading audio file: ' + error.message, 'error');
+        if (error.name !== 'AbortError') {
+          showNotification('Error loading audio file: ' + error.message, 'error');
+        }
       }
     }
+    // Handle network errors and cleanup
+    window.addEventListener('beforeunload', () => {
+      if (currentAudioObjectUrl) {
+        URL.revokeObjectURL(currentAudioObjectUrl);
+      }
+    });
+
+    // Handle audio element source changes
+    audioElement.addEventListener('emptied', () => {
+      // Audio source was removed - update UI
+      playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+      isPlaying = false;
+    });
+
+    // Handle audio stall events
+    audioElement.addEventListener('stalled', () => {
+      console.log('Audio stalled - trying to recover');
+      if (isPlaying) {
+        audioElement.play().catch(e => {
+          console.log('Failed to recover playback:', e);
+        });
+      }
+    });
 
     function togglePlayPause() {
       if (audioElement.src) {
@@ -2940,7 +3129,6 @@
       currentAudioIndex = (currentAudioIndex - 1 + audioFilesInDirectory.length) % audioFilesInDirectory.length;
       const prevFile = audioFilesInDirectory[currentAudioIndex];
       playAudioFile(prevFile);
-      audioElement.play();
     }
 
     function playNext() {
@@ -2949,7 +3137,6 @@
       currentAudioIndex = (currentAudioIndex + 1) % audioFilesInDirectory.length;
       const nextFile = audioFilesInDirectory[currentAudioIndex];
       playAudioFile(nextFile);
-      audioElement.play();
     }
 
     function updateAudioProgress() {
