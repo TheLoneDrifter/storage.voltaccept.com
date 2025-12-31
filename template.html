@@ -690,7 +690,7 @@
       loginBtn.disabled = true;
       loginBtn.textContent = 'Logging in...';
 
-      credentials = btoa(`${username}:${password}`);
+      credentials = `${username}:${btoa(password)}`;
 
       try {
         const response = await fetch(WEBDAV_URL, {
