@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,21 +34,17 @@
       width: 100%;
       height: 100%;
       background-color: #0f0f0f;
-      background-image: 
-        repeating-linear-gradient(
-          45deg,
+      background-image:
+        repeating-linear-gradient(45deg,
           transparent,
           transparent 35px,
           rgba(255, 255, 255, 0.015) 35px,
-          rgba(255, 255, 255, 0.015) 70px
-        ),
-        repeating-linear-gradient(
-          -45deg,
+          rgba(255, 255, 255, 0.015) 70px),
+        repeating-linear-gradient(-45deg,
           transparent,
           transparent 35px,
           rgba(255, 255, 255, 0.01) 35px,
-          rgba(255, 255, 255, 0.01) 70px
-        );
+          rgba(255, 255, 255, 0.01) 70px);
       z-index: 0;
     }
 
@@ -407,6 +404,32 @@
       box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
     }
 
+    .btn-icon {
+      padding: 8px;
+      font-size: 16px;
+      background: #3AE474;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 8px;
+    }
+
+    .btn-icon:hover {
+      background: #2dd966;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(58, 228, 116, 0.3);
+    }
+
+    .btn-icon:first-child {
+      margin-left: 0;
+    }
+
     .file-list {
       flex: 1;
       overflow-y: auto;
@@ -652,19 +675,53 @@
     }
 
     /* Syntax highlighting colors */
-    .syntax-keyword { color: #ff79c6; }
-    .syntax-string { color: #f1fa8c; }
-    .syntax-comment { color: #6272a4; font-style: italic; }
-    .syntax-function { color: #50fa7b; }
-    .syntax-number { color: #bd93f9; }
-    .syntax-property { color: #8be9fd; }
-    .syntax-operator { color: #ff79c6; }
-    .syntax-tag { color: #ff79c6; }
-    .syntax-attribute { color: #50fa7b; }
+    .syntax-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-comment {
+      color: #6272a4;
+      font-style: italic;
+    }
+
+    .syntax-function {
+      color: #50fa7b;
+    }
+
+    .syntax-number {
+      color: #bd93f9;
+    }
+
+    .syntax-property {
+      color: #8be9fd;
+    }
+
+    .syntax-operator {
+      color: #ff79c6;
+    }
+
+    .syntax-tag {
+      color: #ff79c6;
+    }
+
+    .syntax-attribute {
+      color: #50fa7b;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .file-item {
@@ -672,12 +729,27 @@
     }
 
     @keyframes slideIn {
-      from { transform: translateX(400px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
+
     @keyframes slideOut {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(400px); opacity: 0; }
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
     }
 
     /* Added context menu styles */
@@ -819,29 +891,30 @@
         transition: left 0.3s ease;
         z-index: 100;
       }
-      
+
       .sidebar.show {
         left: 0;
       }
-      
+
       .login-form {
         padding: 60px 24px 40px;
       }
-      
+
       .login-form h2 {
         font-size: 24px;
       }
     }
   </style>
 </head>
+
 <body>
   <!-- Login container separate from file explorer -->
   <div id="loginSection" class="login-container">
     <div class="login-form">
       <h2>Login to Continue</h2>
-      
+
       <div class="error-message" id="errorMessage"></div>
-      
+
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" placeholder="Enter your username" autocomplete="username">
@@ -854,7 +927,7 @@
 
       <button class="btn" id="loginBtn">Login</button>
     </div>
-    
+
     <div class="notes">Coded By VoltacceptYT</div>
   </div>
 
@@ -868,7 +941,7 @@
           <span>VoltaTECH</span>
         </div>
       </div>
-      
+
       <nav class="sidebar-nav">
         <div class="nav-item active">
           <i class="bi bi-folder-fill"></i>
@@ -887,9 +960,9 @@
       <div class="toolbar">
         <div class="breadcrumb" id="breadcrumb"></div>
         <div class="toolbar-actions">
-          <button class="btn-small btn-secondary" id="createDirBtn"><i class="bi bi-folder-plus"></i> Create Directory</button>
-          <button class="btn-small" id="uploadBtn"><i class="bi bi-cloud-upload"></i> Upload</button>
-          <button class="btn-small" id="newFileBtn"><i class="bi bi-file-plus"></i> New File</button>
+          <button class="btn-icon" id="createDirBtn" title="Create Directory"><i class="bi bi-folder-plus"></i></button>
+          <button class="btn-icon" id="uploadBtn" title="Upload"><i class="bi bi-cloud-upload"></i></button>
+          <button class="btn-icon" id="newFileBtn" title="New File"><i class="bi bi-file-plus"></i></button>
         </div>
       </div>
 
@@ -1081,12 +1154,12 @@
         const href = response.getElementsByTagNameNS('DAV:', 'href')[0]?.textContent || '';
         const propstat = response.getElementsByTagNameNS('DAV:', 'propstat')[0];
         const prop = propstat?.getElementsByTagNameNS('DAV:', 'prop')[0];
-        
+
         if (!prop) continue;
 
         const isCollection = prop.getElementsByTagNameNS('DAV:', 'resourcetype')[0]
           ?.getElementsByTagNameNS('DAV:', 'collection').length > 0;
-        
+
         const contentLength = prop.getElementsByTagNameNS('DAV:', 'getcontentlength')[0]?.textContent || '0';
         const lastModified = prop.getElementsByTagNameNS('DAV:', 'getlastmodified')[0]?.textContent || '';
 
@@ -1123,7 +1196,7 @@
       items.forEach(item => {
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
-        
+
         const icon = item.isDirectory ? '<i class="bi bi-folder-fill"></i>' : getFileIcon(item.name);
         const sizeText = item.isDirectory ? 'Folder' : formatSize(item.size);
         const dateText = formatDate(item.modified);
@@ -1149,7 +1222,7 @@
 
         fileItem.addEventListener('click', (e) => {
           if (e.target.closest('.file-actions')) return;
-          
+
           if (item.isDirectory) {
             loadDirectory(currentPath + item.name + '/');
           } else {
@@ -1163,19 +1236,19 @@
 
     async function openFileEditor(item) {
       const url = WEBDAV_URL + item.href.replace('/webdav/', '');
-      
+
       try {
         const response = await fetch(url, {
           headers: { 'Authorization': `Basic ${credentials}` }
         });
-        
+
         if (!response.ok) throw new Error('Failed to load file');
-        
+
         const content = await response.text();
         const modal = document.getElementById('fileEditorModal');
         const textarea = document.getElementById('editorTextarea');
         const pathDisplay = document.getElementById('editorPath');
-        
+
         currentEditingFile = {
           url: url,
           name: item.name,
@@ -1200,7 +1273,7 @@
 
       // Build menu items based on type
       let menuHTML = '';
-      
+
       if (!item.isDirectory) {
         menuHTML = `
           <div class="context-menu-item" onclick="moveFile()">
@@ -1233,7 +1306,7 @@
 
       menu.innerHTML = menuHTML;
       menu.classList.add('show');
-      
+
       // Position menu to the left of the mouse
       const menuWidth = menu.offsetWidth;
       menu.style.left = (e.pageX - menuWidth) + 'px';
@@ -1327,7 +1400,7 @@
 
           // Ensure path ends with /
           if (!destPath.endsWith('/')) destPath += '/';
-          
+
           // Ensure path starts with /home/
           if (!destPath.startsWith('/home/')) {
             showNotification('Path must start with /home/', 'error');
@@ -1405,16 +1478,21 @@
     function updateBreadcrumb() {
       const displayPath = currentPath;
       const parts = displayPath.split('/').filter(Boolean);
-      
+
       breadcrumb.innerHTML = '';
-      
+
       // Root
+
+      const rootSeperator = document.createElement('span');
+      rootSeperator.className = 'breadcrumb-separator';
+      rootSeperator.textContent = '/';
+      breadcrumb.appendChild(rootSeperator);
       const root = document.createElement('span');
       root.className = 'breadcrumb-item';
-      root.textContent = '/clouddrive/';
+      root.textContent = 'clouddrive';
       root.addEventListener('click', () => loadDirectory('/'));
       breadcrumb.appendChild(root);
-      
+
       // Build path parts
       let accumulatedPath = '/';
       parts.forEach((part, index) => {
@@ -1423,7 +1501,7 @@
         separator.className = 'breadcrumb-separator';
         separator.textContent = '/';
         breadcrumb.appendChild(separator);
-        
+
         // Add path segment
         const segment = document.createElement('span');
         segment.className = 'breadcrumb-item';
@@ -1431,13 +1509,13 @@
           segment.classList.add('active');
         }
         segment.textContent = part;
-        
+
         // Calculate actual path (restore container if it was replaced)
-        const actualPart = (displayPath === currentPath) ? part : 
+        const actualPart = (displayPath === currentPath) ? part :
           (index === 0 && part === 'home' ? 'home/container' : part);
         accumulatedPath += actualPart + '/';
         const pathToNavigate = accumulatedPath;
-        
+
         segment.addEventListener('click', () => loadDirectory(pathToNavigate));
         breadcrumb.appendChild(segment);
       });
@@ -1465,7 +1543,7 @@
         'gif': 'bi-filetype-gif',
         'svg': 'bi-filetype-svg',
       };
-      
+
       const iconClass = iconMap[ext] || 'bi-file-earmark-fill';
       return `<i class="bi ${iconClass}"></i>`;
     }
@@ -1511,7 +1589,7 @@
       `;
       messageDiv.textContent = message;
       document.body.appendChild(messageDiv);
-      
+
       setTimeout(() => {
         messageDiv.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => messageDiv.remove(), 300);
@@ -1519,4 +1597,5 @@
     }
   </script>
 </body>
+
 </html>
