@@ -385,7 +385,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      width: 140px;
+      width: 40px;
+      height: 40px;
       justify-content: center;
     }
 
@@ -544,6 +545,7 @@
       display: none;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
     .file-editor-modal.show {
@@ -953,10 +955,9 @@
       <div class="toolbar">
         <div class="breadcrumb" id="breadcrumb"></div>
         <div class="toolbar-actions">
-          <button class="btn-small btn-secondary" id="createDirBtn"><i class="bi bi-folder-plus"></i> Create
-            Directory</button>
-          <button class="btn-small" id="uploadBtn"><i class="bi bi-cloud-upload"></i> Upload</button>
-          <button class="btn-small" id="newFileBtn"><i class="bi bi-file-plus"></i> New File</button>
+          <button class="btn-small btn-secondary" id="createDirBtn"><i class="bi bi-folder-plus"></i></button>
+          <button class="btn-small" id="uploadBtn"><i class="bi bi-cloud-upload"></i></button>
+          <button class="btn-small" id="newFileBtn"><i class="bi bi-file-plus"></i></button>
         </div>
       </div>
 
