@@ -234,6 +234,23 @@
       overflow-y: auto;
     }
 
+    .sidebar-nav::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      background: rgba(58, 228, 116, 0.3);
+      border-radius: 3px;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-thumb:hover {
+      background: rgba(58, 228, 116, 0.5);
+    }
+
     .nav-item {
       display: flex;
       align-items: center;
@@ -607,13 +624,49 @@
       line-height: 1.6;
       user-select: none;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
-      overflow-y: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .line-numbers::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .line-numbers::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .line-numbers::-webkit-scrollbar-thumb {
+      background: rgba(58, 228, 116, 0.3);
+      border-radius: 4px;
+    }
+
+    .line-numbers::-webkit-scrollbar-thumb:hover {
+      background: rgba(58, 228, 116, 0.5);
     }
 
     .editor-textarea-container {
       flex: 1;
       position: relative;
       overflow: auto;
+    }
+
+    .editor-textarea-container::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .editor-textarea-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .editor-textarea-container::-webkit-scrollbar-thumb {
+      background: rgba(58, 228, 116, 0.3);
+      border-radius: 4px;
+    }
+
+    .editor-textarea-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(58, 228, 116, 0.5);
     }
 
     .editor-textarea {
@@ -1038,11 +1091,9 @@
     document.getElementById('saveFileBtn').addEventListener('click', saveFile);
     document.getElementById('closeEditorBtn').addEventListener('click', closeEditor);
     document.getElementById('editorTextarea').addEventListener('input', updateLineNumbers);
-    passwordInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') login();
+    document.getElementById('editorTextarea').addEventListener('scroll', () => {
+      document.getElementById('lineNumbers').scrollTop = document.getElementById('editorTextarea').scrollTop;
     });
-
-    document.getElementById('editorTextarea').addEventListener('input', updateLineNumbers);
     passwordInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') login();
     });
@@ -1599,8 +1650,12 @@
     }
 
     function updateLineNumbers() {
-      const lines = document.getElementById('editorTextarea').value.split('\n').length;
-      document.getElementById('lineNumbers').innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
+      const textarea = document.getElementById('editorTextarea');
+      const lineNumbers = document.getElementById('lineNumbers');
+      const lines = textarea.value.split('\n').length;
+      lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
+      // Sync scroll position
+      lineNumbers.scrollTop = textarea.scrollTop;
     }
 
     function escapeHtml(text) {
