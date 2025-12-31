@@ -604,99 +604,390 @@
     }
 
     /* Syntax Highlighting Colors */
-    .syntax-keyword { color: #ff79c6; font-weight: bold; }
-    .syntax-string { color: #f1fa8c; }
-    .syntax-comment { color: #6272a4; font-style: italic; }
-    .syntax-function { color: #50fa7b; }
-    .syntax-number { color: #bd93f9; }
-    .syntax-property { color: #8be9fd; }
-    .syntax-operator { color: #ff79c6; }
-    .syntax-tag { color: #ff79c6; }
-    .syntax-attribute { color: #50fa7b; }
-    .syntax-class { color: #8be9fd; font-weight: bold; }
-    .syntax-constant { color: #ffb86c; }
-    .syntax-builtin { color: #50fa7b; }
-    .syntax-type { color: #8be9fd; }
-    .syntax-macro { color: #ff79c6; }
-    .syntax-regex { color: #f1fa8c; }
-    .syntax-escape { color: #ffb86c; }
-    .syntax-annotation { color: #6272a4; }
-    .syntax-namespace { color: #ff79c6; }
-    .syntax-import { color: #50fa7b; }
-    .syntax-export { color: #50fa7b; }
-    .syntax-module { color: #8be9fd; }
-    .syntax-interface { color: #8be9fd; }
-    .syntax-enum { color: #8be9fd; }
-    .syntax-generic { color: #ffb86c; }
-    .syntax-decorator { color: #50fa7b; }
-    .syntax-async { color: #ff79c6; }
-    .syntax-await { color: #ff79c6; }
-    .syntax-html-tag { color: #ff79c6; }
-    .syntax-html-attribute { color: #50fa7b; }
-    .syntax-html-string { color: #f1fa8c; }
-    .syntax-css-selector { color: #8be9fd; }
-    .syntax-css-property { color: #50fa7b; }
-    .syntax-css-value { color: #ffb86c; }
-    .syntax-json-key { color: #50fa7b; }
-    .syntax-json-string { color: #f1fa8c; }
-    .syntax-json-number { color: #bd93f9; }
-    .syntax-json-boolean { color: #ff79c6; }
-    .syntax-sql-keyword { color: #ff79c6; }
-    .syntax-sql-function { color: #50fa7b; }
-    .syntax-sql-string { color: #f1fa8c; }
-    .syntax-sql-number { color: #bd93f9; }
-    .syntax-shell-command { color: #50fa7b; }
-    .syntax-shell-argument { color: #f1fa8c; }
-    .syntax-shell-variable { color: #8be9fd; }
-    .syntax-yaml-key { color: #50fa7b; }
-    .syntax-yaml-string { color: #f1fa8c; }
-    .syntax-yaml-number { color: #bd93f9; }
-    .syntax-xml-tag { color: #ff79c6; }
-    .syntax-xml-attribute { color: #50fa7b; }
-    .syntax-xml-string { color: #f1fa8c; }
-    .syntax-markdown-heading { color: #ff79c6; font-weight: bold; }
-    .syntax-markdown-bold { color: #ffb86c; font-weight: bold; }
-    .syntax-markdown-italic { color: #ffb86c; font-style: italic; }
-    .syntax-markdown-code { color: #f1fa8c; background: rgba(255, 255, 255, 0.05); padding: 2px 4px; border-radius: 3px; }
-    .syntax-markdown-link { color: #8be9fd; }
-    .syntax-php-tag { color: #ff79c6; }
-    .syntax-php-variable { color: #8be9fd; }
-    .syntax-ruby-symbol { color: #ffb86c; }
-    .syntax-ruby-class { color: #8be9fd; font-weight: bold; }
-    .syntax-go-keyword { color: #ff79c6; }
-    .syntax-go-type { color: #8be9fd; }
-    .syntax-go-function { color: #50fa7b; }
-    .syntax-rust-lifetime { color: #ffb86c; }
-    .syntax-rust-macro { color: #ff79c6; }
-    .syntax-swift-type { color: #8be9fd; }
-    .syntax-swift-function { color: #50fa7b; }
-    .syntax-kotlin-keyword { color: #ff79c6; }
-    .syntax-kotlin-class { color: #8be9fd; }
-    .syntax-typescript-type { color: #8be9fd; font-weight: bold; }
-    .syntax-typescript-interface { color: #8be9fd; }
-    .syntax-python-decorator { color: #50fa7b; }
-    .syntax-python-self { color: #8be9fd; }
-    .syntax-java-annotation { color: #6272a4; }
-    .syntax-java-class { color: #8be9fd; font-weight: bold; }
-    .syntax-csharp-keyword { color: #ff79c6; }
-    .syntax-csharp-type { color: #8be9fd; }
-    .syntax-cpp-keyword { color: #ff79c6; }
-    .syntax-cpp-type { color: #8be9fd; }
-    .syntax-haskell-type { color: #8be9fd; font-weight: bold; }
-    .syntax-haskell-function { color: #50fa7b; }
-    .syntax-elixir-atom { color: #ffb86c; }
-    .syntax-elixir-module { color: #8be9fd; }
-    .syntax-clojure-keyword { color: #ffb86c; }
-    .syntax-clojure-function { color: #50fa7b; }
-    .syntax-lua-table { color: #8be9fd; }
-    .syntax-lua-function { color: #50fa7b; }
-    .syntax-perl-variable { color: #8be9fd; }
-    .syntax-perl-regex { color: #f1fa8c; }
-    .syntax-scala-keyword { color: #ff79c6; }
-    .syntax-scala-type { color: #8be9fd; }
-    .syntax-dart-keyword { color: #ff79c6; }
-    .syntax-dart-type { color: #8be9fd; }
-    .syntax-dart-function { color: #50fa7b; }
+    .syntax-keyword {
+      color: #ff79c6;
+      font-weight: bold;
+    }
+
+    .syntax-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-comment {
+      color: #6272a4;
+      font-style: italic;
+    }
+
+    .syntax-function {
+      color: #50fa7b;
+    }
+
+    .syntax-number {
+      color: #bd93f9;
+    }
+
+    .syntax-property {
+      color: #8be9fd;
+    }
+
+    .syntax-operator {
+      color: #ff79c6;
+    }
+
+    .syntax-tag {
+      color: #ff79c6;
+    }
+
+    .syntax-attribute {
+      color: #50fa7b;
+    }
+
+    .syntax-class {
+      color: #8be9fd;
+      font-weight: bold;
+    }
+
+    .syntax-constant {
+      color: #ffb86c;
+    }
+
+    .syntax-builtin {
+      color: #50fa7b;
+    }
+
+    .syntax-type {
+      color: #8be9fd;
+    }
+
+    .syntax-macro {
+      color: #ff79c6;
+    }
+
+    .syntax-regex {
+      color: #f1fa8c;
+    }
+
+    .syntax-escape {
+      color: #ffb86c;
+    }
+
+    .syntax-annotation {
+      color: #6272a4;
+    }
+
+    .syntax-namespace {
+      color: #ff79c6;
+    }
+
+    .syntax-import {
+      color: #50fa7b;
+    }
+
+    .syntax-export {
+      color: #50fa7b;
+    }
+
+    .syntax-module {
+      color: #8be9fd;
+    }
+
+    .syntax-interface {
+      color: #8be9fd;
+    }
+
+    .syntax-enum {
+      color: #8be9fd;
+    }
+
+    .syntax-generic {
+      color: #ffb86c;
+    }
+
+    .syntax-decorator {
+      color: #50fa7b;
+    }
+
+    .syntax-async {
+      color: #ff79c6;
+    }
+
+    .syntax-await {
+      color: #ff79c6;
+    }
+
+    .syntax-html-tag {
+      color: #ff79c6;
+    }
+
+    .syntax-html-attribute {
+      color: #50fa7b;
+    }
+
+    .syntax-html-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-css-selector {
+      color: #8be9fd;
+    }
+
+    .syntax-css-property {
+      color: #50fa7b;
+    }
+
+    .syntax-css-value {
+      color: #ffb86c;
+    }
+
+    .syntax-json-key {
+      color: #50fa7b;
+    }
+
+    .syntax-json-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-json-number {
+      color: #bd93f9;
+    }
+
+    .syntax-json-boolean {
+      color: #ff79c6;
+    }
+
+    .syntax-sql-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-sql-function {
+      color: #50fa7b;
+    }
+
+    .syntax-sql-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-sql-number {
+      color: #bd93f9;
+    }
+
+    .syntax-shell-command {
+      color: #50fa7b;
+    }
+
+    .syntax-shell-argument {
+      color: #f1fa8c;
+    }
+
+    .syntax-shell-variable {
+      color: #8be9fd;
+    }
+
+    .syntax-yaml-key {
+      color: #50fa7b;
+    }
+
+    .syntax-yaml-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-yaml-number {
+      color: #bd93f9;
+    }
+
+    .syntax-xml-tag {
+      color: #ff79c6;
+    }
+
+    .syntax-xml-attribute {
+      color: #50fa7b;
+    }
+
+    .syntax-xml-string {
+      color: #f1fa8c;
+    }
+
+    .syntax-markdown-heading {
+      color: #ff79c6;
+      font-weight: bold;
+    }
+
+    .syntax-markdown-bold {
+      color: #ffb86c;
+      font-weight: bold;
+    }
+
+    .syntax-markdown-italic {
+      color: #ffb86c;
+      font-style: italic;
+    }
+
+    .syntax-markdown-code {
+      color: #f1fa8c;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .syntax-markdown-link {
+      color: #8be9fd;
+    }
+
+    .syntax-php-tag {
+      color: #ff79c6;
+    }
+
+    .syntax-php-variable {
+      color: #8be9fd;
+    }
+
+    .syntax-ruby-symbol {
+      color: #ffb86c;
+    }
+
+    .syntax-ruby-class {
+      color: #8be9fd;
+      font-weight: bold;
+    }
+
+    .syntax-go-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-go-type {
+      color: #8be9fd;
+    }
+
+    .syntax-go-function {
+      color: #50fa7b;
+    }
+
+    .syntax-rust-lifetime {
+      color: #ffb86c;
+    }
+
+    .syntax-rust-macro {
+      color: #ff79c6;
+    }
+
+    .syntax-swift-type {
+      color: #8be9fd;
+    }
+
+    .syntax-swift-function {
+      color: #50fa7b;
+    }
+
+    .syntax-kotlin-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-kotlin-class {
+      color: #8be9fd;
+    }
+
+    .syntax-typescript-type {
+      color: #8be9fd;
+      font-weight: bold;
+    }
+
+    .syntax-typescript-interface {
+      color: #8be9fd;
+    }
+
+    .syntax-python-decorator {
+      color: #50fa7b;
+    }
+
+    .syntax-python-self {
+      color: #8be9fd;
+    }
+
+    .syntax-java-annotation {
+      color: #6272a4;
+    }
+
+    .syntax-java-class {
+      color: #8be9fd;
+      font-weight: bold;
+    }
+
+    .syntax-csharp-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-csharp-type {
+      color: #8be9fd;
+    }
+
+    .syntax-cpp-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-cpp-type {
+      color: #8be9fd;
+    }
+
+    .syntax-haskell-type {
+      color: #8be9fd;
+      font-weight: bold;
+    }
+
+    .syntax-haskell-function {
+      color: #50fa7b;
+    }
+
+    .syntax-elixir-atom {
+      color: #ffb86c;
+    }
+
+    .syntax-elixir-module {
+      color: #8be9fd;
+    }
+
+    .syntax-clojure-keyword {
+      color: #ffb86c;
+    }
+
+    .syntax-clojure-function {
+      color: #50fa7b;
+    }
+
+    .syntax-lua-table {
+      color: #8be9fd;
+    }
+
+    .syntax-lua-function {
+      color: #50fa7b;
+    }
+
+    .syntax-perl-variable {
+      color: #8be9fd;
+    }
+
+    .syntax-perl-regex {
+      color: #f1fa8c;
+    }
+
+    .syntax-scala-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-scala-type {
+      color: #8be9fd;
+    }
+
+    .syntax-dart-keyword {
+      color: #ff79c6;
+    }
+
+    .syntax-dart-type {
+      color: #8be9fd;
+    }
+
+    .syntax-dart-function {
+      color: #50fa7b;
+    }
 
     @keyframes fadeIn {
       from {
@@ -888,6 +1179,363 @@
         font-size: 24px;
       }
     }
+
+    /* Upload Progress Overlay */
+    .upload-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 10002;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-overlay.show {
+      display: flex;
+    }
+
+    .upload-progress-container {
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(58, 228, 116, 0.3);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .upload-progress-title {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .upload-progress-subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .upload-progress-filename {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      margin-bottom: 20px;
+      text-align: center;
+      word-break: break-all;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    /* Circular Progress Bar */
+    .progress-circle-container {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .progress-circle {
+      width: 120px;
+      height: 120px;
+      position: relative;
+    }
+
+    .progress-circle-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 6;
+    }
+
+    .progress-circle-fill {
+      fill: none;
+      stroke: #3AE474;
+      stroke-width: 6;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dasharray 0.3s ease;
+    }
+
+    .progress-circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .upload-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+    }
+
+    .upload-cancel-btn {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: rgba(239, 68, 68, 0.2);
+      color: #ff6b6b;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .upload-cancel-btn:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+
+    /* Audio Player Modal */
+    .audio-player-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(20px);
+      z-index: 10003;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .audio-player-modal.show {
+      display: flex;
+    }
+
+    .audio-player-container {
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(58, 228, 116, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .audio-player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .audio-player-title {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .audio-player-title i {
+      color: #3AE474;
+    }
+
+    .audio-player-close {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .audio-player-close:hover {
+      background: rgba(58, 228, 116, 0.2);
+      color: #3AE474;
+    }
+
+    .audio-player-content {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .audio-cover {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #3AE474, #2a9d5f);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .audio-player-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .audio-player-main-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .audio-player-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .audio-player-btn:hover {
+      background: rgba(58, 228, 116, 0.2);
+      transform: scale(1.1);
+    }
+
+    .audio-player-btn.play {
+      width: 70px;
+      height: 70px;
+      background: #3AE474;
+      color: #000;
+      font-size: 28px;
+    }
+
+    .audio-player-btn.play:hover {
+      background: #2dd966;
+      box-shadow: 0 0 30px rgba(58, 228, 116, 0.5);
+    }
+
+    .audio-progress {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #3AE474;
+      width: 0%;
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+
+    .progress-time {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .audio-volume {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .volume-icon {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 18px;
+    }
+
+    .volume-slider {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .volume-fill {
+      height: 100%;
+      background: #3AE474;
+      width: 100%;
+      border-radius: 2px;
+    }
+
+    /* File Item Progress Overlay */
+    .file-item.uploading {
+      position: relative;
+    }
+
+    .file-item-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .file-item-progress-circle {
+      width: 50px;
+      height: 50px;
+    }
+
+    .file-item-progress-circle-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 3;
+    }
+
+    .file-item-progress-circle-fill {
+      fill: none;
+      stroke: #3AE474;
+      stroke-width: 3;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    .file-item-progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+    }
   </style>
 </head>
 
@@ -994,6 +1642,89 @@
     </div>
   </div>
 
+  <!-- Upload Progress Overlay -->
+  <div id="uploadProgressOverlay" class="upload-overlay">
+    <div class="upload-progress-container">
+      <h3 class="upload-progress-title">Uploading Files</h3>
+      <p class="upload-progress-subtitle">Please wait while files are being uploaded</p>
+
+      <div class="upload-progress-filename" id="uploadCurrentFilename"></div>
+
+      <div class="progress-circle-container">
+        <div class="progress-circle">
+          <svg class="progress-circle-svg" width="120" height="120" viewBox="0 0 120 120">
+            <circle class="progress-circle-bg" cx="60" cy="60" r="54"></circle>
+            <circle class="progress-circle-fill" cx="60" cy="60" r="54" stroke-dasharray="339.292"
+              stroke-dashoffset="0"></circle>
+          </svg>
+          <div class="progress-circle-text" id="uploadProgressPercent">0%</div>
+        </div>
+      </div>
+
+      <div class="upload-stats">
+        <span id="uploadStatsProgress">0 / 0 files</span>
+        <span id="uploadStatsSpeed">0 KB/s</span>
+        <span id="uploadStatsTime">--:--</span>
+      </div>
+
+      <button class="upload-cancel-btn" id="cancelUploadBtn">Cancel Upload</button>
+    </div>
+  </div>
+
+  <!-- Audio Player Modal -->
+  <div id="audioPlayerModal" class="audio-player-modal">
+    <div class="audio-player-container">
+      <div class="audio-player-header">
+        <div class="audio-player-title">
+          <i class="bi bi-music-note-beamed"></i>
+          <span id="audioPlayerTitle">Now Playing</span>
+        </div>
+        <button class="audio-player-close" id="closeAudioPlayerBtn">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="audio-player-content">
+        <div class="audio-cover" id="audioCover">
+          <i class="bi bi-music-note-beamed"></i>
+        </div>
+
+        <div class="audio-player-controls">
+          <audio id="audioElement" preload="metadata"></audio>
+
+          <div class="audio-progress">
+            <div class="progress-bar" id="audioProgressBar">
+              <div class="progress-fill" id="audioProgressFill"></div>
+            </div>
+            <div class="progress-time">
+              <span id="audioCurrentTime">0:00</span>
+              <span id="audioDuration">0:00</span>
+            </div>
+          </div>
+
+          <div class="audio-player-main-controls">
+            <button class="audio-player-btn" id="prevBtn">
+              <i class="bi bi-skip-backward-fill"></i>
+            </button>
+            <button class="audio-player-btn" id="playPauseBtn">
+              <i class="bi bi-play-fill"></i>
+            </button>
+            <button class="audio-player-btn" id="nextBtn">
+              <i class="bi bi-skip-forward-fill"></i>
+            </button>
+          </div>
+
+          <div class="audio-volume">
+            <i class="bi bi-volume-up volume-icon"></i>
+            <div class="volume-slider" id="volumeSlider">
+              <div class="volume-fill" id="volumeFill" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <input type="file" id="fileInput" multiple>
   <input type="file" id="folderInput" webkitdirectory multiple style="display: none">
 
@@ -1024,7 +1755,7 @@
           { regex: /\b(console|document|window|Math|JSON|Array|Object|String|Number|Boolean|Date|RegExp|Promise|Set|Map|Symbol|Proxy|Reflect)\b/g, className: 'syntax-builtin' }
         ]
       },
-      
+
       // Python
       'python': {
         patterns: [
@@ -1038,18 +1769,19 @@
           { regex: /\b(\d+(\.\d+)?)\b/g, className: 'syntax-number' }
         ]
       },
-      
+
       // HTML
       'html': {
         patterns: [
           { regex: /<\/?[a-zA-Z][a-zA-Z0-9:-]*\b/g, className: 'syntax-html-tag' },
           { regex: /[a-zA-Z-]+(?=\s*=\s*["'])/g, className: 'syntax-html-attribute' },
           { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-html-string' },
-          { regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
-          { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
+          {
+            regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
+              { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
         ]
       },
-      
+
       // CSS
       'css': {
         patterns: [
@@ -1060,7 +1792,7 @@
           { regex: /\b(!important|inherit|initial|unset|revert)\b/g, className: 'syntax-keyword' }
         ]
       },
-      
+
       // Java
       'java': {
         patterns: [
@@ -1073,7 +1805,7 @@
           { regex: /@[a-zA-Z_][a-zA-Z0-9_]*/g, className: 'syntax-java-annotation' }
         ]
       },
-      
+
       // C++
       'cpp': {
         patterns: [
@@ -1084,7 +1816,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // C#
       'csharp': {
         patterns: [
@@ -1095,7 +1827,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // PHP
       'php': {
         patterns: [
@@ -1107,7 +1839,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // Ruby
       'ruby': {
         patterns: [
@@ -1118,7 +1850,7 @@
           { regex: /#.*$/gm, className: 'syntax-comment' }
         ]
       },
-      
+
       // Go
       'go': {
         patterns: [
@@ -1131,7 +1863,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // Rust
       'rust': {
         patterns: [
@@ -1143,7 +1875,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // Swift
       'swift': {
         patterns: [
@@ -1155,7 +1887,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // Kotlin
       'kotlin': {
         patterns: [
@@ -1166,7 +1898,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // TypeScript
       'typescript': {
         patterns: [
@@ -1179,7 +1911,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // SQL
       'sql': {
         patterns: [
@@ -1191,7 +1923,7 @@
           { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
         ]
       },
-      
+
       // Shell/Bash
       'shell': {
         patterns: [
@@ -1202,7 +1934,7 @@
           { regex: /#.*$/gm, className: 'syntax-comment' }
         ]
       },
-      
+
       // JSON
       'json': {
         patterns: [
@@ -1212,7 +1944,7 @@
           { regex: /\b(\d+(\.\d+)?([eE][+-]?\d+)?)\b/g, className: 'syntax-json-number' }
         ]
       },
-      
+
       // YAML
       'yaml': {
         patterns: [
@@ -1223,7 +1955,7 @@
           { regex: /#.*$/gm, className: 'syntax-comment' }
         ]
       },
-      
+
       // XML
       'xml': {
         patterns: [
@@ -1234,7 +1966,7 @@
           { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
         ]
       },
-      
+
       // Markdown
       'markdown': {
         patterns: [
@@ -1247,7 +1979,7 @@
           { regex: /!\[([^\]]+)\]\(([^)]+)\)/g, className: 'syntax-markdown-link' }
         ]
       },
-      
+
       // Plain Text (default)
       'text': {
         patterns: []
@@ -1295,6 +2027,45 @@
       'svg': 'xml',
       'tex': 'latex', 'bib': 'latex'
     };
+    // Audio player variables
+    let currentAudioFile = null;
+    let currentAudioIndex = 0;
+    let audioFilesInDirectory = [];
+    let isPlaying = false;
+
+    // Upload variables
+    let uploadQueue = [];
+    let currentUpload = null;
+    let uploadCancelled = false;
+    let uploadStartTime = null;
+    let uploadStats = {
+      totalBytes: 0,
+      uploadedBytes: 0,
+      totalFiles: 0,
+      completedFiles: 0
+    };
+
+    // JSZip for folder download
+    let JSZip;
+    // Dynamically load JSZip
+    const loadJSZip = () => {
+      return new Promise((resolve, reject) => {
+        if (window.JSZip) {
+          JSZip = window.JSZip;
+          resolve();
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        script.onload = () => {
+          JSZip = window.JSZip;
+          resolve();
+        };
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
 
     // DOM Elements
     const loginSection = document.getElementById('loginSection');
@@ -1317,6 +2088,39 @@
     const lineNumbers = document.getElementById('lineNumbers');
     const uploadFolderBtn = document.getElementById('uploadFolderBtn');
     const folderInput = document.getElementById('folderInput');
+
+    // Upload progress overlay
+    const cancelUploadBtn = document.getElementById('cancelUploadBtn');
+    cancelUploadBtn.addEventListener('click', cancelUpload);
+
+    // Audio player events
+    const audioPlayerModal = document.getElementById('audioPlayerModal');
+    const closeAudioPlayerBtn = document.getElementById('closeAudioPlayerBtn');
+    const audioElement = document.getElementById('audioElement');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const audioProgressBar = document.getElementById('audioProgressBar');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    closeAudioPlayerBtn.addEventListener('click', closeAudioPlayer);
+    playPauseBtn.addEventListener('click', togglePlayPause);
+    prevBtn.addEventListener('click', playPrevious);
+    nextBtn.addEventListener('click', playNext);
+    audioProgressBar.addEventListener('click', seekAudio);
+    volumeSlider.addEventListener('click', adjustVolume);
+
+    audioElement.addEventListener('timeupdate', updateAudioProgress);
+    audioElement.addEventListener('loadedmetadata', updateAudioDuration);
+    audioElement.addEventListener('ended', playNext);
+    audioElement.addEventListener('play', () => {
+      isPlaying = true;
+      playPauseBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
+    });
+    audioElement.addEventListener('pause', () => {
+      isPlaying = false;
+      playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+    });
 
     // Event Listeners
     window.addEventListener('hashchange', () => {
@@ -1348,12 +2152,12 @@
     });
 
     // Editor functionality
-    editorTextarea.addEventListener('input', function() {
+    editorTextarea.addEventListener('input', function () {
       updateLineNumbers();
       applySyntaxHighlighting();
     });
 
-    editorTextarea.addEventListener('scroll', function() {
+    editorTextarea.addEventListener('scroll', function () {
       lineNumbers.scrollTop = editorTextarea.scrollTop;
     });
 
@@ -1523,6 +2327,8 @@
 
           if (item.isDirectory) {
             loadDirectory(currentPath + item.name + '/');
+          } else if (isAudioFile(item.name)) {
+            openAudioPlayer(item);
           } else {
             openFileEditor(item);
           }
@@ -1556,10 +2362,10 @@
         pathDisplay.textContent = item.href.replace('/webdav/', '/home/');
         editorTextarea.value = content;
         modal.classList.add('show');
-        
+
         updateLineNumbers();
         applySyntaxHighlighting();
-        
+
         setTimeout(() => editorTextarea.focus(), 100);
       } catch (error) {
         showNotification('Error loading file: ' + error.message, 'error');
@@ -1569,20 +2375,20 @@
     // Apply syntax highlighting
     function applySyntaxHighlighting() {
       if (!currentEditingFile) return;
-      
+
       const text = editorTextarea.value;
       const extension = currentEditingFile.name.split('.').pop().toLowerCase();
       const language = languageMap[extension] || 'text';
       const patterns = syntaxPatterns[language]?.patterns || [];
-      
+
       let highlightedText = escapeHtml(text);
-      
+
       patterns.forEach(pattern => {
-        highlightedText = highlightedText.replace(pattern.regex, 
+        highlightedText = highlightedText.replace(pattern.regex,
           match => `<span class="${pattern.className}">${match}</span>`
         );
       });
-      
+
       const lines = text.split('\n').length;
       lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
     }
@@ -1700,165 +2506,512 @@
         return;
       }
 
-      let successCount = 0;
-      let errorCount = 0;
-
+      // Add files to upload queue
       for (const file of files) {
         const extension = file.name.split('.').pop().toLowerCase();
 
         if (BLOCKED_EXTENSIONS.includes(extension)) {
           showNotification(`File type .${extension} is not allowed`, 'error');
-          errorCount++;
           continue;
         }
 
-        try {
-          const sanitizedName = sanitizeFilename(file.name);
-          const uploadPath = currentPath + sanitizedName;
-          const url = WEBDAV_URL + uploadPath;
-
-          const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-              'Authorization': `Basic ${credentials}`,
-              'Content-Type': file.type || 'application/octet-stream'
-            },
-            body: file
-          });
-
-          if (!response.ok) throw new Error('Upload failed');
-          successCount++;
-        } catch (error) {
-          console.error('Upload error:', error);
-          errorCount++;
-        }
+        uploadQueue.push({
+          file: file,
+          type: 'file',
+          path: currentPath + sanitizeFilename(file.name)
+        });
       }
 
-      if (successCount > 0) {
-        showNotification(`${successCount} file(s) uploaded successfully`, 'success');
-        loadDirectory(currentPath);
-      }
-
-      if (errorCount > 0) {
-        showNotification(`${errorCount} file(s) failed to upload`, 'error');
-      }
-
-      fileInput.value = '';
+      // Start upload process
+      startUpload();
     }
 
     // Handle folder upload
     async function handleFolderUpload(event) {
       const items = Array.from(event.target.files);
-      
+
       if (items.length === 0) return;
-      
+
       if (items.length > MAX_FILES_PER_UPLOAD) {
         showNotification(`Maximum ${MAX_FILES_PER_UPLOAD} files per upload`, 'error');
         return;
       }
-      
-      let successCount = 0;
-      let errorCount = 0;
-      let folderStructure = {};
-      
-      // First, build the folder structure and create directories
+
+      // Build folder structure and add to upload queue
       for (const file of items) {
         const relativePath = file.webkitRelativePath;
         const pathParts = relativePath.split('/');
         const fileName = pathParts.pop();
         const folderPath = pathParts.join('/');
-        
-        // Store file in structure
-        if (!folderStructure[folderPath]) {
-          folderStructure[folderPath] = [];
+
+        const extension = fileName.split('.').pop().toLowerCase();
+
+        if (BLOCKED_EXTENSIONS.includes(extension)) {
+          showNotification(`File type .${extension} is not allowed`, 'error');
+          continue;
         }
-        folderStructure[folderPath].push({ file, fileName });
+
+        const sanitizedFileName = sanitizeFilename(fileName);
+        const sanitizedFolderPath = folderPath.split('/').map(sanitizeFilename).join('/');
+        const fullPath = sanitizedFolderPath ?
+          currentPath + sanitizedFolderPath + '/' + sanitizedFileName :
+          currentPath + sanitizedFileName;
+
+        uploadQueue.push({
+          file: file,
+          type: 'file',
+          path: fullPath,
+          folderPath: sanitizedFolderPath,
+          fileName: sanitizedFileName
+        });
       }
-      
-      // Create directories first
-      const allFolders = Object.keys(folderStructure).sort((a, b) => a.split('/').length - b.split('/').length);
-      
-      for (const folderPath of allFolders) {
-        if (!folderPath) continue; // Skip root folder
-        
-        const folderParts = folderPath.split('/');
-        let tempPath = currentPath; // Use a different variable name to avoid conflict
-        
-        // Create nested directories
-        for (const folderName of folderParts) {
-          const sanitizedFolderName = sanitizeFilename(folderName);
-          const newFolderPath = tempPath + sanitizedFolderName + '/';
-          const url = WEBDAV_URL + newFolderPath;
-          
-          try {
-            const response = await fetch(url, {
-              method: 'MKCOL',
-              headers: {
-                'Authorization': `Basic ${credentials}`
-              }
-            });
-            
-            // 405 (Method Not Allowed) means folder already exists, which is fine
-            if (!response.ok && response.status !== 405) {
-              throw new Error('Failed to create directory');
-            }
-            
-            tempPath = newFolderPath; // Update tempPath for next iteration
-          } catch (error) {
-            console.error('Error creating folder:', error);
-            errorCount++;
-          }
-        }
-      }
-      
-      // Now upload all files
-      for (const [folderPath, files] of Object.entries(folderStructure)) {
-        const basePath = folderPath ? currentPath + folderPath + '/' : currentPath;
-        
-        for (const { file, fileName } of files) {
-          const extension = fileName.split('.').pop().toLowerCase();
-          
-          if (BLOCKED_EXTENSIONS.includes(extension)) {
-            showNotification(`File type .${extension} is not allowed`, 'error');
-            errorCount++;
-            continue;
-          }
-          
-          try {
-            const sanitizedName = sanitizeFilename(fileName);
-            const uploadPath = basePath + sanitizedName;
-            const url = WEBDAV_URL + uploadPath;
-            
-            const response = await fetch(url, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `Basic ${credentials}`,
-                'Content-Type': file.type || 'application/octet-stream'
-              },
-              body: file
-            });
-            
-            if (!response.ok) throw new Error('Upload failed');
-            successCount++;
-          } catch (error) {
-            console.error('Upload error:', error);
-            errorCount++;
-          }
-        }
-      }
-      
-      // Show results
-      if (successCount > 0) {
-        showNotification(`${successCount} file(s) uploaded successfully from folder`, 'success');
-        loadDirectory(currentPath);
-      }
-      
-      if (errorCount > 0) {
-        showNotification(`${errorCount} file(s) failed to upload`, 'error');
-      }
-      
-      folderInput.value = '';
+
+      // Start upload process
+      startUpload();
     }
+
+    async function startUpload() {
+      if (uploadQueue.length === 0) return;
+
+      uploadCancelled = false;
+      uploadStartTime = Date.now();
+      uploadStats = {
+        totalBytes: uploadQueue.reduce((sum, item) => sum + item.file.size, 0),
+        uploadedBytes: 0,
+        totalFiles: uploadQueue.length,
+        completedFiles: 0
+      };
+
+      // Show upload progress overlay
+      const overlay = document.getElementById('uploadProgressOverlay');
+      overlay.classList.add('show');
+
+      // Process upload queue
+      for (let i = 0; i < uploadQueue.length; i++) {
+        if (uploadCancelled) break;
+
+        const item = uploadQueue[i];
+        currentUpload = item;
+
+        // Update current filename display
+        document.getElementById('uploadCurrentFilename').textContent =
+          item.fileName || item.file.name;
+
+        // Create directories if needed
+        if (item.folderPath) {
+          const folderParts = item.folderPath.split('/');
+          let currentDir = currentPath;
+
+          for (const folder of folderParts) {
+            currentDir += folder + '/';
+            const dirUrl = WEBDAV_URL + currentDir;
+
+            try {
+              const response = await fetch(dirUrl, {
+                method: 'MKCOL',
+                headers: { 'Authorization': `Basic ${credentials}` }
+              });
+
+              if (!response.ok && response.status !== 405) {
+                console.warn(`Failed to create directory: ${currentDir}`);
+              }
+            } catch (error) {
+              console.warn(`Error creating directory: ${currentDir}`, error);
+            }
+          }
+        }
+
+        // Upload file with progress tracking
+        await uploadFileWithProgress(item);
+
+        uploadStats.completedFiles++;
+
+        // Update progress
+        updateUploadProgress();
+      }
+
+      // Hide overlay and reset queue
+      overlay.classList.remove('show');
+
+      if (!uploadCancelled) {
+        showNotification(`${uploadStats.completedFiles} file(s) uploaded successfully`, 'success');
+        loadDirectory(currentPath);
+      } else {
+        showNotification('Upload cancelled', 'warning');
+      }
+
+      // Reset
+      uploadQueue = [];
+      currentUpload = null;
+    }
+
+    async function uploadFileWithProgress(item) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = WEBDAV_URL + item.path;
+
+        xhr.open('PUT', url, true);
+        xhr.setRequestHeader('Authorization', `Basic ${credentials}`);
+        xhr.setRequestHeader('Content-Type', item.file.type || 'application/octet-stream');
+
+        // Track upload progress
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const fileProgress = (event.loaded / event.total) * 100;
+            const overallProgress = ((uploadStats.uploadedBytes + event.loaded) / uploadStats.totalBytes) * 100;
+
+            updateProgressCircle(overallProgress);
+
+            // Calculate upload speed
+            const elapsedSeconds = (Date.now() - uploadStartTime) / 1000;
+            const speed = elapsedSeconds > 0 ? (uploadStats.uploadedBytes + event.loaded) / elapsedSeconds : 0;
+
+            // Update stats display
+            document.getElementById('uploadStatsProgress').textContent =
+              `${uploadStats.completedFiles + 1} / ${uploadStats.totalFiles} files`;
+            document.getElementById('uploadStatsSpeed').textContent =
+              formatSize(speed) + '/s';
+
+            // Estimate time remaining
+            const remainingBytes = uploadStats.totalBytes - (uploadStats.uploadedBytes + event.loaded);
+            const remainingSeconds = speed > 0 ? remainingBytes / speed : 0;
+            document.getElementById('uploadStatsTime').textContent =
+              formatTime(remainingSeconds);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            uploadStats.uploadedBytes += item.file.size;
+            resolve();
+          } else {
+            reject(new Error(`Upload failed: ${xhr.statusText}`));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error('Network error'));
+
+        xhr.send(item.file);
+      });
+    }
+
+    function updateProgressCircle(percentage) {
+      const circle = document.querySelector('.progress-circle-fill');
+      const text = document.getElementById('uploadProgressPercent');
+
+      const radius = 54;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (percentage / 100) * circumference;
+
+      circle.style.strokeDasharray = `${circumference} ${circumference}`;
+      circle.style.strokeDashoffset = offset;
+      text.textContent = `${Math.round(percentage)}%`;
+    }
+
+    function updateUploadProgress() {
+      const percentage = (uploadStats.completedFiles / uploadStats.totalFiles) * 100;
+      updateProgressCircle(percentage);
+    }
+
+    function cancelUpload() {
+      uploadCancelled = true;
+      document.getElementById('uploadProgressOverlay').classList.remove('show');
+
+      // Abort any ongoing XHR upload
+      // Note: We would need to track the active XHR to abort it
+    }
+
+    function formatTime(seconds) {
+      if (seconds === Infinity || isNaN(seconds)) return '--:--';
+
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    async function downloadFile() {
+      if (!contextMenuItem) return;
+
+      try {
+        const url = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
+        const response = await fetch(url, {
+          headers: { 'Authorization': `Basic ${credentials}` }
+        });
+
+        if (!response.ok) throw new Error('Download failed');
+
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = contextMenuItem.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+
+        showNotification('File downloaded successfully', 'success');
+      } catch (error) {
+        showNotification('Error downloading file: ' + error.message, 'error');
+      }
+    }
+
+    async function downloadFolderAsZip() {
+      if (!contextMenuItem || !contextMenuItem.isDirectory) return;
+
+      showNotification('Preparing folder download...', 'info');
+
+      // Load JSZip if not already loaded
+      await loadJSZip().catch(() => {
+        showNotification('Error loading ZIP library', 'error');
+        return;
+      });
+
+      const zip = new JSZip();
+      const folderPath = contextMenuItem.href.replace('/webdav/', '');
+
+      try {
+        // Recursively get all files in the folder
+        const files = await getAllFilesInDirectory(folderPath);
+
+        if (files.length === 0) {
+          showNotification('Folder is empty', 'warning');
+          return;
+        }
+
+        showNotification(`Adding ${files.length} files to ZIP...`, 'info');
+
+        // Add each file to the ZIP
+        for (const file of files) {
+          const fileUrl = WEBDAV_URL + file.href;
+          const response = await fetch(fileUrl, {
+            headers: { 'Authorization': `Basic ${credentials}` }
+          });
+
+          if (response.ok) {
+            const blob = await response.blob();
+            const relativePath = file.href.replace(folderPath, '').substring(1);
+            zip.file(relativePath, blob);
+          }
+        }
+
+        // Generate ZIP file
+        showNotification('Generating ZIP file...', 'info');
+        const content = await zip.generateAsync({ type: 'blob' });
+
+        // Download the ZIP
+        const downloadUrl = window.URL.createObjectURL(content);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = `${contextMenuItem.name}.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+
+        showNotification('Folder downloaded as ZIP successfully', 'success');
+      } catch (error) {
+        showNotification('Error downloading folder: ' + error.message, 'error');
+      }
+    }
+
+    async function getAllFilesInDirectory(path, files = []) {
+      const url = WEBDAV_URL + path;
+      const response = await fetch(url, {
+        method: 'PROPFIND',
+        headers: {
+          'Authorization': `Basic ${credentials}`,
+          'Depth': '1'
+        }
+      });
+
+      if (!response.ok) return files;
+
+      const text = await response.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, 'text/xml');
+      const items = parseWebDAV(xml);
+
+      for (const item of items) {
+        if (item.isDirectory) {
+          await getAllFilesInDirectory(item.href.replace('/webdav/', ''), files);
+        } else {
+          files.push(item);
+        }
+      }
+
+      return files;
+    }
+
+    function openAudioPlayer(fileItem) {
+      currentAudioFile = fileItem;
+
+      // Load all audio files in current directory
+      loadAudioFilesInDirectory();
+
+      // Play the selected file
+      playAudioFile(fileItem);
+
+      // Show audio player modal
+      audioPlayerModal.classList.add('show');
+    }
+
+    function closeAudioPlayer() {
+      audioPlayerModal.classList.remove('show');
+      audioElement.pause();
+      isPlaying = false;
+      playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+    }
+
+    async function loadAudioFilesInDirectory() {
+      try {
+        const url = WEBDAV_URL + currentPath;
+        const response = await fetch(url, {
+          method: 'PROPFIND',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Depth': '1'
+          }
+        });
+
+        if (!response.ok) return;
+
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, 'text/xml');
+        const items = parseWebDAV(xml);
+
+        // Filter audio files
+        audioFilesInDirectory = items.filter(item =>
+          !item.isDirectory && isAudioFile(item.name)
+        );
+
+        // Find current file index
+        currentAudioIndex = audioFilesInDirectory.findIndex(file =>
+          file.name === currentAudioFile.name
+        );
+      } catch (error) {
+        console.error('Error loading audio files:', error);
+      }
+    }
+
+    function isAudioFile(filename) {
+      const audioExtensions = ['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac', 'wma', 'webm'];
+      const ext = filename.split('.').pop().toLowerCase();
+      return audioExtensions.includes(ext);
+    }
+
+    async function playAudioFile(fileItem) {
+      try {
+        const url = WEBDAV_URL + fileItem.href.replace('/webdav/', '');
+        const response = await fetch(url, {
+          headers: { 'Authorization': `Basic ${credentials}` }
+        });
+
+        if (!response.ok) throw new Error('Failed to load audio');
+
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+
+        audioElement.src = objectUrl;
+        document.getElementById('audioPlayerTitle').textContent = fileItem.name;
+
+        // When audio metadata is loaded, it will trigger loadedmetadata event
+      } catch (error) {
+        showNotification('Error loading audio file: ' + error.message, 'error');
+      }
+    }
+
+    function togglePlayPause() {
+      if (audioElement.src) {
+        if (isPlaying) {
+          audioElement.pause();
+        } else {
+          audioElement.play().catch(e => {
+            showNotification('Error playing audio: ' + e.message, 'error');
+          });
+        }
+      }
+    }
+
+    function playPrevious() {
+      if (audioFilesInDirectory.length === 0) return;
+
+      currentAudioIndex = (currentAudioIndex - 1 + audioFilesInDirectory.length) % audioFilesInDirectory.length;
+      const prevFile = audioFilesInDirectory[currentAudioIndex];
+      playAudioFile(prevFile);
+      audioElement.play();
+    }
+
+    function playNext() {
+      if (audioFilesInDirectory.length === 0) return;
+
+      currentAudioIndex = (currentAudioIndex + 1) % audioFilesInDirectory.length;
+      const nextFile = audioFilesInDirectory[currentAudioIndex];
+      playAudioFile(nextFile);
+      audioElement.play();
+    }
+
+    function updateAudioProgress() {
+      const currentTime = audioElement.currentTime;
+      const duration = audioElement.duration || 0;
+
+      const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+      document.getElementById('audioProgressFill').style.width = `${progressPercent}%`;
+
+      document.getElementById('audioCurrentTime').textContent = formatAudioTime(currentTime);
+    }
+
+    function updateAudioDuration() {
+      const duration = audioElement.duration || 0;
+      document.getElementById('audioDuration').textContent = formatAudioTime(duration);
+    }
+
+    function formatAudioTime(seconds) {
+      if (isNaN(seconds)) return '0:00';
+
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function seekAudio(e) {
+      if (!audioElement.duration) return;
+
+      const progressBar = e.currentTarget;
+      const rect = progressBar.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      audioElement.currentTime = pos * audioElement.duration;
+    }
+
+    function adjustVolume(e) {
+      const slider = e.currentTarget;
+      const rect = slider.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      const volume = Math.max(0, Math.min(1, pos));
+
+      audioElement.volume = volume;
+      document.getElementById('volumeFill').style.width = `${volume * 100}%`;
+    }
+
+    // Update the file click handler to play audio files
+    function updateFileClickHandler() {
+      // In the displayFiles function, update the file click handler:
+      fileItem.addEventListener('click', (e) => {
+        if (e.target.closest('.file-actions')) return;
+
+        if (item.isDirectory) {
+          loadDirectory(currentPath + item.name + '/');
+        } else if (isAudioFile(item.name)) {
+          openAudioPlayer(item);
+        } else {
+          openFileEditor(item);
+        }
+      });
+    }
+
+
+
     // Show context menu
     function showContextMenu(e, item) {
       e.preventDefault();
@@ -1869,8 +3022,13 @@
 
       let menuHTML = '';
 
+      // Update the showContextMenu function to include download option
       if (!item.isDirectory) {
         menuHTML = `
+          <div class="context-menu-item" onclick="downloadFile()">
+            <i class="bi bi-download"></i>
+            <span>Download</span>
+          </div>
           <div class="context-menu-item" onclick="moveFile()">
             <i class="bi bi-arrows-move"></i>
             <span>Move</span>
@@ -1887,6 +3045,10 @@
         `;
       } else {
         menuHTML = `
+          <div class="context-menu-item" onclick="downloadFolderAsZip()">
+            <i class="bi bi-download"></i>
+            <span>Download as ZIP</span>
+          </div>
           <div class="context-menu-item" onclick="renameFile()">
             <i class="bi bi-pencil"></i>
             <span>Rename</span>
@@ -2124,6 +3286,11 @@
         'jpeg': 'bi-filetype-jpg',
         'gif': 'bi-filetype-gif',
         'svg': 'bi-filetype-svg',
+        'mp3': 'bi-file-earmark-music',
+        'wav': 'bi-file-earmark-music',
+        'ogg': 'bi-file-earmark-music',
+        'm4a': 'bi-file-earmark-music',
+        'flac': 'bi-file-earmark-music',
       };
 
       const iconClass = iconMap[ext] || 'bi-file-earmark-fill';
@@ -2179,4 +3346,5 @@
     }
   </script>
 </body>
+
 </html>
