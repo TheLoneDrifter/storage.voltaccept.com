@@ -387,6 +387,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      width: 140px;
+      justify-content: center;
     }
 
     .btn-small:hover {
@@ -440,14 +442,6 @@
 
     .file-item:hover {
       background: rgba(58, 228, 116, 0.08);
-    }
-
-    .file-checkbox {
-      width: 20px;
-      height: 20px;
-      margin-right: 16px;
-      cursor: pointer;
-      accent-color: #3AE474;
     }
 
     .file-icon {
@@ -1135,7 +1129,6 @@
         const dateText = formatDate(item.modified);
 
         fileItem.innerHTML = `
-          <input type="checkbox" class="file-checkbox">
           <div class="file-icon">${icon}</div>
           <div class="file-info">
             <div class="file-name">${escapeHtml(item.name)}</div>
@@ -1155,7 +1148,7 @@
         });
 
         fileItem.addEventListener('click', (e) => {
-          if (e.target.type === 'checkbox' || e.target.closest('.file-actions')) return;
+          if (e.target.closest('.file-actions')) return;
           
           if (item.isDirectory) {
             loadDirectory(currentPath + item.name + '/');
@@ -1239,9 +1232,12 @@
       }
 
       menu.innerHTML = menuHTML;
-      menu.style.left = e.pageX + 'px';
-      menu.style.top = e.pageY + 'px';
       menu.classList.add('show');
+      
+      // Position menu to the left of the mouse
+      const menuWidth = menu.offsetWidth;
+      menu.style.left = (e.pageX - menuWidth) + 'px';
+      menu.style.top = e.pageY + 'px';
 
       // Close menu when clicking outside
       setTimeout(() => {
@@ -1407,7 +1403,7 @@
     }
 
     function updateBreadcrumb() {
-      const displayPath = currentPath.replace('/home/container/', '/home/');
+      const displayPath = currentPath;
       const parts = displayPath.split('/').filter(Boolean);
       
       breadcrumb.innerHTML = '';
@@ -1415,7 +1411,7 @@
       // Root
       const root = document.createElement('span');
       root.className = 'breadcrumb-item';
-      root.textContent = '/';
+      root.textContent = '/clouddrive/';
       root.addEventListener('click', () => loadDirectory('/'));
       breadcrumb.appendChild(root);
       
