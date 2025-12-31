@@ -340,20 +340,22 @@
     .breadcrumb {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 4px;
       flex-wrap: wrap;
       flex: 1;
       min-width: 200px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
     }
 
     .breadcrumb-item {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 400;
       font-size: 14px;
       transition: all 0.2s ease;
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
 
     .breadcrumb-item:hover {
@@ -361,15 +363,14 @@
       color: #3AE474;
     }
 
-    .breadcrumb-separator {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 12px;
+    .breadcrumb-item.active {
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .toolbar-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .breadcrumb-separator {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 14px;
+      margin: 0 2px;
     }
 
     /* Updated button styling with green theme */
@@ -530,13 +531,142 @@
     }
 
     .empty-state-text {
-      font-size: 16px;
-      font-weight: 400;
+      font-size: 14px;
+      color: #6b7280;
     }
 
     input[type="file"] {
       display: none;
     }
+
+    /* Added file editor modal styling */
+    .file-editor-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .file-editor-modal.show {
+      display: flex;
+    }
+
+    .file-editor-container {
+      width: 95%;
+      height: 90%;
+      max-width: 1400px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .editor-header {
+      background: #0f0f0f;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-path {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .editor-path .path-separator {
+      color: rgba(255, 255, 255, 0.3);
+      margin: 0 4px;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .editor-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .line-numbers {
+      background: #0f0f0f;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 20px 16px;
+      text-align: right;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      user-select: none;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-y: hidden;
+    }
+
+    .editor-textarea-container {
+      flex: 1;
+      position: relative;
+      overflow: auto;
+    }
+
+    .editor-textarea {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      resize: none;
+      padding: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre;
+      overflow-wrap: normal;
+      overflow-x: auto;
+    }
+
+    .syntax-highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre;
+      overflow-wrap: normal;
+      pointer-events: none;
+      color: transparent;
+    }
+
+    /* Syntax highlighting colors */
+    .syntax-keyword { color: #ff79c6; }
+    .syntax-string { color: #f1fa8c; }
+    .syntax-comment { color: #6272a4; font-style: italic; }
+    .syntax-function { color: #50fa7b; }
+    .syntax-number { color: #bd93f9; }
+    .syntax-property { color: #8be9fd; }
+    .syntax-operator { color: #ff79c6; }
+    .syntax-tag { color: #ff79c6; }
+    .syntax-attribute { color: #50fa7b; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -545,6 +675,147 @@
 
     .file-item {
       animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(400px); opacity: 0; }
+    }
+
+    /* Added context menu styles */
+    .context-menu {
+      position: absolute;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid rgba(58, 228, 116, 0.2);
+      border-radius: 8px;
+      padding: 4px;
+      min-width: 150px;
+      z-index: 10000;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(20px);
+      display: none;
+    }
+
+    .context-menu.show {
+      display: block;
+    }
+
+    .context-menu-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .context-menu-item:hover {
+      background: rgba(58, 228, 116, 0.1);
+      color: #3AE474;
+    }
+
+    .context-menu-item i {
+      font-size: 16px;
+      width: 20px;
+    }
+
+    .context-menu-divider {
+      height: 1px;
+      background: rgba(58, 228, 116, 0.1);
+      margin: 4px 0;
+    }
+
+    /* Added modal styles for rename/move dialogs */
+    .dialog-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10001;
+    }
+
+    .dialog-modal.show {
+      display: flex;
+    }
+
+    .dialog-content {
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(58, 228, 116, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      min-width: 400px;
+      max-width: 500px;
+    }
+
+    .dialog-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .dialog-input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(58, 228, 116, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .dialog-input:focus {
+      outline: none;
+      border-color: #3AE474;
+      box-shadow: 0 0 0 3px rgba(58, 228, 116, 0.1);
+    }
+
+    .dialog-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .dialog-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dialog-btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      color: #9ca3af;
+    }
+
+    .dialog-btn-cancel:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .dialog-btn-confirm {
+      background: #3AE474;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .dialog-btn-confirm:hover {
+      background: #2ed463;
     }
 
     @media (max-width: 768px) {
@@ -566,16 +837,6 @@
       .login-form h2 {
         font-size: 24px;
       }
-    }
-
-    /* Added CSS animations for temporary messages */
-    @keyframes slideIn {
-      from { transform: translateX(400px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slideOut {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(400px); opacity: 0; }
     }
   </style>
 </head>
@@ -645,12 +906,49 @@
     </div>
   </div>
 
+  <!-- Added context menu -->
+  <div id="contextMenu" class="context-menu"></div>
+
+  <!-- Added dialog modal for rename/move -->
+  <div id="dialogModal" class="dialog-modal">
+    <div class="dialog-content">
+      <div class="dialog-title" id="dialogTitle">Rename</div>
+      <input type="text" class="dialog-input" id="dialogInput" placeholder="Enter new name">
+      <div class="dialog-buttons">
+        <button class="dialog-btn dialog-btn-cancel" onclick="closeDialog()">Cancel</button>
+        <button class="dialog-btn dialog-btn-confirm" id="dialogConfirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Added file editor modal -->
+  <div id="fileEditorModal" class="file-editor-modal">
+    <div class="file-editor-container">
+      <div class="editor-header">
+        <div class="editor-path" id="editorPath"></div>
+        <div class="editor-actions">
+          <button class="btn-small" id="saveFileBtn"><i class="bi bi-save"></i> Save</button>
+          <button class="btn-small btn-secondary" id="closeEditorBtn"><i class="bi bi-x-lg"></i> Close</button>
+        </div>
+      </div>
+      <div class="editor-content">
+        <div class="line-numbers" id="lineNumbers">1</div>
+        <div class="editor-textarea-container">
+          <textarea class="editor-textarea" id="editorTextarea" spellcheck="false"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <input type="file" id="fileInput" multiple>
 
   <script>
     const WEBDAV_URL = 'http://storage.voltaccept.com/webdav/';
     let credentials = null;
     let currentPath = '/';
+    let currentEditingFile = null;
+    let contextMenu = null;
+    let contextMenuItem = null;
 
     const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB limit
     const BLOCKED_EXTENSIONS = ['exe', 'bat', 'cmd', 'sh', 'scr', 'com', 'pif'];
@@ -667,6 +965,27 @@
     const errorMessage = document.getElementById('errorMessage');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
+    const createDirBtn = document.getElementById('createDirBtn');
+    const newFileBtn = document.getElementById('newFileBtn');
+    const dialogModal = document.getElementById('dialogModal');
+    const dialogInput = document.getElementById('dialogInput');
+    const dialogConfirm = document.getElementById('dialogConfirm');
+    const contextMenuEl = document.getElementById('contextMenu');
+
+    window.addEventListener('hashchange', () => {
+      const path = window.location.hash.slice(1) || '/';
+      if (path !== currentPath) {
+        loadDirectory(path);
+      }
+    });
+
+    // Check for hash on load
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.slice(1);
+      if (hash && credentials) {
+        loadDirectory(hash);
+      }
+    });
 
     loginBtn.addEventListener('click', login);
     passwordInput.addEventListener('keypress', (e) => {
@@ -722,6 +1041,7 @@
     logoutBtn.addEventListener('click', () => {
       credentials = null;
       currentPath = '/';
+      window.location.hash = '';
       loginSection.style.display = 'flex';
       fileExplorer.classList.remove('show');
       usernameInput.value = '';
@@ -731,6 +1051,7 @@
 
     async function loadDirectory(path) {
       currentPath = path;
+      window.location.hash = path;
       updateBreadcrumb();
       fileList.innerHTML = '<div class="loading">Loading files...</div>';
 
@@ -827,13 +1148,19 @@
           </div>
         `;
 
+        const actionBtn = fileItem.querySelector('.file-action-btn');
+        actionBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showContextMenu(e, item);
+        });
+
         fileItem.addEventListener('click', (e) => {
           if (e.target.type === 'checkbox' || e.target.closest('.file-actions')) return;
           
           if (item.isDirectory) {
             loadDirectory(currentPath + item.name + '/');
           } else {
-            downloadFile(item);
+            openFileEditor(item);
           }
         });
 
@@ -841,157 +1168,227 @@
       });
     }
 
-    function downloadFile(item) {
+    async function openFileEditor(item) {
       const url = WEBDAV_URL + item.href.replace('/webdav/', '');
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = item.name;
-      
-      fetch(url, {
-        headers: { 'Authorization': `Basic ${credentials}` }
-      })
-      .then(response => response.blob())
-      .then(blob => {
-        const blobUrl = URL.createObjectURL(blob);
-        a.href = blobUrl;
-        a.click();
-        URL.revokeObjectURL(blobUrl);
-      });
-    }
-
-    uploadBtn.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', async (e) => {
-      const files = Array.from(e.target.files);
-      
-      if (files.length > MAX_FILES_PER_UPLOAD) {
-        showTemporaryMessage(`You can only upload up to ${MAX_FILES_PER_UPLOAD} files at once.`, true);
-        fileInput.value = '';
-        return;
-      }
-
-      const invalidFiles = validateFiles(files);
-      if (invalidFiles.length > 0) {
-        showTemporaryMessage(`Cannot upload:\n${invalidFiles.join('\n')}`, true);
-        fileInput.value = '';
-        return;
-      }
-      
-      uploadBtn.disabled = true;
-      uploadBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Uploading...';
-      
-      let uploadedCount = 0;
-      for (const file of files) {
-        const success = await uploadFile(file);
-        if (success) uploadedCount++;
-      }
-      
-      uploadBtn.disabled = false;
-      uploadBtn.innerHTML = '<i class="bi bi-cloud-upload"></i> Upload';
-      fileInput.value = '';
-      
-      if (uploadedCount > 0) {
-        loadDirectory(currentPath);
-      }
-      
-      if (uploadedCount === files.length) {
-        showTemporaryMessage(`Successfully uploaded ${uploadedCount} file(s)`);
-      } else {
-        showTemporaryMessage(`Uploaded ${uploadedCount} of ${files.length} file(s)`, true);
-      }
-    });
-
-    function validateFiles(files) {
-      const errors = [];
-      
-      for (const file of files) {
-        // Check file size
-        if (file.size > MAX_FILE_SIZE) {
-          errors.push(`${file.name} - File too large (max ${formatSize(MAX_FILE_SIZE)})`);
-          continue;
-        }
-        
-        // Check for blocked extensions
-        const ext = file.name.split('.').pop().toLowerCase();
-        if (BLOCKED_EXTENSIONS.includes(ext)) {
-          errors.push(`${file.name} - File type not allowed`);
-          continue;
-        }
-        
-        // Check for path traversal attempts in filename
-        if (file.name.includes('..') || file.name.includes('/') || file.name.includes('\\')) {
-          errors.push(`${file.name} - Invalid filename`);
-          continue;
-        }
-        
-        // Check for null bytes
-        if (file.name.includes('\0')) {
-          errors.push(`${file.name} - Invalid filename`);
-          continue;
-        }
-      }
-      
-      return errors;
-    }
-
-    async function uploadFile(file) {
-      // Sanitize filename
-      const safeName = sanitizeFilename(file.name);
-      const url = WEBDAV_URL + currentPath.slice(1) + encodeURIComponent(safeName);
       
       try {
         const response = await fetch(url, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Basic ${credentials}`,
-            'Content-Type': file.type || 'application/octet-stream'
-          },
-          body: file
+          headers: { 'Authorization': `Basic ${credentials}` }
         });
         
-        if (!response.ok) {
-          console.error(`Upload failed for ${file.name}:`, response.status);
-          return false;
-        }
+        if (!response.ok) throw new Error('Failed to load file');
         
-        return true;
+        const content = await response.text();
+        const modal = document.getElementById('fileEditorModal');
+        const textarea = document.getElementById('editorTextarea');
+        const pathDisplay = document.getElementById('editorPath');
+        
+        currentEditingFile = {
+          url: url,
+          name: item.name,
+          path: item.href
+        };
+
+        pathDisplay.textContent = item.href.replace('/webdav/', '/home/');
+        textarea.value = content;
+        modal.classList.add('show');
+        updateLineNumbers();
       } catch (error) {
-        console.error('Upload failed:', error);
-        return false;
+        showNotification('Error loading file: ' + error.message, 'error');
       }
     }
-    
-    function sanitizeFilename(filename) {
-      return filename
-        .replace(/[<>:"|?*]/g, '_')
-        .replace(/\.\./g, '_')
-        .replace(/^\./, '_')
-        .trim();
-    }
-    
-    function showTemporaryMessage(message, isError = false) {
-      const messageDiv = document.createElement('div');
-      messageDiv.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(58, 228, 116, 0.95)'};
-        color: white;
-        padding: 16px 24px;
-        border-radius: 10px;
-        font-size: 14px;
-        font-weight: 500;
-        z-index: 10000;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(10px);
-        animation: slideIn 0.3s ease;
-      `;
-      messageDiv.textContent = message;
-      document.body.appendChild(messageDiv);
+
+    function showContextMenu(e, item) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const menu = document.getElementById('contextMenu');
+      contextMenuItem = item;
+
+      // Build menu items based on type
+      let menuHTML = '';
       
+      if (!item.isDirectory) {
+        menuHTML = `
+          <div class="context-menu-item" onclick="moveFile()">
+            <i class="bi bi-arrows-move"></i>
+            <span>Move</span>
+          </div>
+          <div class="context-menu-item" onclick="renameFile()">
+            <i class="bi bi-pencil"></i>
+            <span>Rename</span>
+          </div>
+          <div class="context-menu-divider"></div>
+          <div class="context-menu-item" onclick="deleteFile()">
+            <i class="bi bi-trash"></i>
+            <span>Delete</span>
+          </div>
+        `;
+      } else {
+        menuHTML = `
+          <div class="context-menu-item" onclick="renameFile()">
+            <i class="bi bi-pencil"></i>
+            <span>Rename</span>
+          </div>
+          <div class="context-menu-divider"></div>
+          <div class="context-menu-item" onclick="deleteFile()">
+            <i class="bi bi-trash"></i>
+            <span>Delete</span>
+          </div>
+        `;
+      }
+
+      menu.innerHTML = menuHTML;
+      menu.style.left = e.pageX + 'px';
+      menu.style.top = e.pageY + 'px';
+      menu.classList.add('show');
+
+      // Close menu when clicking outside
       setTimeout(() => {
-        messageDiv.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => messageDiv.remove(), 300);
-      }, 3000);
+        document.addEventListener('click', closeContextMenu);
+      }, 0);
+    }
+
+    function closeContextMenu() {
+      const menu = document.getElementById('contextMenu');
+      menu.classList.remove('show');
+      document.removeEventListener('click', closeContextMenu);
+    }
+
+    function showDialog(title, placeholder, value, callback) {
+      const modal = document.getElementById('dialogModal');
+      const titleEl = document.getElementById('dialogTitle');
+      const input = document.getElementById('dialogInput');
+      const confirmBtn = document.getElementById('dialogConfirm');
+
+      titleEl.textContent = title;
+      input.placeholder = placeholder;
+      input.value = value;
+      modal.classList.add('show');
+      input.focus();
+
+      confirmBtn.onclick = () => {
+        callback(input.value);
+        closeDialog();
+      };
+
+      input.onkeypress = (e) => {
+        if (e.key === 'Enter') {
+          callback(input.value);
+          closeDialog();
+        }
+      };
+    }
+
+    function closeDialog() {
+      const modal = document.getElementById('dialogModal');
+      modal.classList.remove('show');
+    }
+
+    async function renameFile() {
+      if (!contextMenuItem) return;
+
+      showDialog(
+        'Rename ' + (contextMenuItem.isDirectory ? 'Folder' : 'File'),
+        'Enter new name',
+        contextMenuItem.name,
+        async (newName) => {
+          if (!newName || newName === contextMenuItem.name) return;
+
+          const oldUrl = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
+          const newPath = currentPath + newName + (contextMenuItem.isDirectory ? '/' : '');
+          const newUrl = WEBDAV_URL + newPath;
+
+          try {
+            const response = await fetch(oldUrl, {
+              method: 'MOVE',
+              headers: {
+                'Authorization': `Basic ${credentials}`,
+                'Destination': newUrl
+              }
+            });
+
+            if (!response.ok) throw new Error('Failed to rename');
+
+            showNotification('Renamed successfully', 'success');
+            loadDirectory(currentPath);
+          } catch (error) {
+            showNotification('Error renaming: ' + error.message, 'error');
+          }
+        }
+      );
+    }
+
+    async function moveFile() {
+      if (!contextMenuItem || contextMenuItem.isDirectory) return;
+
+      showDialog(
+        'Move File',
+        'Enter destination path (e.g., /home/folder/)',
+        currentPath,
+        async (destPath) => {
+          if (!destPath || destPath === currentPath) return;
+
+          // Ensure path ends with /
+          if (!destPath.endsWith('/')) destPath += '/';
+          
+          // Ensure path starts with /home/
+          if (!destPath.startsWith('/home/')) {
+            showNotification('Path must start with /home/', 'error');
+            return;
+          }
+
+          const oldUrl = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
+          const newUrl = WEBDAV_URL + destPath + contextMenuItem.name;
+
+          try {
+            const response = await fetch(oldUrl, {
+              method: 'MOVE',
+              headers: {
+                'Authorization': `Basic ${credentials}`,
+                'Destination': newUrl
+              }
+            });
+
+            if (!response.ok) throw new Error('Failed to move');
+
+            showNotification('Moved successfully', 'success');
+            loadDirectory(currentPath);
+          } catch (error) {
+            showNotification('Error moving file: ' + error.message, 'error');
+          }
+        }
+      );
+    }
+
+    async function deleteFile() {
+      if (!contextMenuItem) return;
+
+      const itemType = contextMenuItem.isDirectory ? 'folder' : 'file';
+      if (!confirm(`Are you sure you want to delete this ${itemType}?`)) return;
+
+      const url = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
+
+      try {
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Basic ${credentials}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to delete');
+
+        showNotification('Deleted successfully', 'success');
+        loadDirectory(currentPath);
+      } catch (error) {
+        showNotification('Error deleting: ' + error.message, 'error');
+      }
+    }
+
+    function updateLineNumbers() {
+      const lines = document.getElementById('editorTextarea').value.split('\n').length;
+      document.getElementById('lineNumbers').innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
     }
 
     function escapeHtml(text) {
@@ -1010,16 +1407,74 @@
     }
 
     function updateBreadcrumb() {
-      // Implement breadcrumb update logic here
+      const displayPath = currentPath.replace('/home/container/', '/home/');
+      const parts = displayPath.split('/').filter(Boolean);
+      
+      breadcrumb.innerHTML = '';
+      
+      // Root
+      const root = document.createElement('span');
+      root.className = 'breadcrumb-item';
+      root.textContent = '/';
+      root.addEventListener('click', () => loadDirectory('/'));
+      breadcrumb.appendChild(root);
+      
+      // Build path parts
+      let accumulatedPath = '/';
+      parts.forEach((part, index) => {
+        // Add separator
+        const separator = document.createElement('span');
+        separator.className = 'breadcrumb-separator';
+        separator.textContent = '/';
+        breadcrumb.appendChild(separator);
+        
+        // Add path segment
+        const segment = document.createElement('span');
+        segment.className = 'breadcrumb-item';
+        if (index === parts.length - 1) {
+          segment.classList.add('active');
+        }
+        segment.textContent = part;
+        
+        // Calculate actual path (restore container if it was replaced)
+        const actualPart = (displayPath === currentPath) ? part : 
+          (index === 0 && part === 'home' ? 'home/container' : part);
+        accumulatedPath += actualPart + '/';
+        const pathToNavigate = accumulatedPath;
+        
+        segment.addEventListener('click', () => loadDirectory(pathToNavigate));
+        breadcrumb.appendChild(segment);
+      });
     }
 
     function getFileIcon(filename) {
-      // Implement file icon logic here
-      return '<i class="bi bi-file-earmark-fill"></i>';
+      const ext = filename.split('.').pop().toLowerCase();
+      const iconMap = {
+        'js': 'bi-filetype-js',
+        'json': 'bi-filetype-json',
+        'html': 'bi-filetype-html',
+        'css': 'bi-filetype-css',
+        'py': 'bi-filetype-py',
+        'txt': 'bi-filetype-txt',
+        'md': 'bi-filetype-md',
+        'xml': 'bi-filetype-xml',
+        'yml': 'bi-filetype-yml',
+        'yaml': 'bi-filetype-yml',
+        'sh': 'bi-file-earmark-code',
+        'zip': 'bi-file-earmark-zip',
+        'pdf': 'bi-filetype-pdf',
+        'png': 'bi-filetype-png',
+        'jpg': 'bi-filetype-jpg',
+        'jpeg': 'bi-filetype-jpg',
+        'gif': 'bi-filetype-gif',
+        'svg': 'bi-filetype-svg',
+      };
+      
+      const iconClass = iconMap[ext] || 'bi-file-earmark-fill';
+      return `<i class="bi ${iconClass}"></i>`;
     }
 
     function formatSize(size) {
-      // Implement file size formatting logic here
       const units = ['B', 'KB', 'MB', 'GB', 'TB'];
       let i = 0;
       while (size >= 1024 && i < units.length - 1) {
@@ -1030,8 +1485,41 @@
     }
 
     function formatDate(date) {
-      // Implement date formatting logic here
       return date.toLocaleString();
+    }
+
+    function sanitizeFilename(filename) {
+      return filename
+        .replace(/[<>:"|?*]/g, '_')
+        .replace(/\.\./g, '_')
+        .replace(/^\./, '_')
+        .trim();
+    }
+
+    function showNotification(message, type) {
+      const messageDiv = document.createElement('div');
+      messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'error' ? 'rgba(239, 68, 68, 0.95)' : 'rgba(58, 228, 116, 0.95)'};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 10000;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        animation: slideIn 0.3s ease;
+      `;
+      messageDiv.textContent = message;
+      document.body.appendChild(messageDiv);
+      
+      setTimeout(() => {
+        messageDiv.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => messageDiv.remove(), 300);
+      }, 3000);
     }
   </script>
 </body>
