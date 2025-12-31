@@ -372,7 +372,8 @@
 
     /* Updated button styling with green theme */
     .btn-small {
-      padding: 10px 18px;
+      padding: 10px 16px;
+      margin: 4px;
       font-size: 14px;
       background: #3AE474;
       color: white;
@@ -402,32 +403,6 @@
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.15);
       box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-icon {
-      padding: 8px;
-      font-size: 16px;
-      background: #3AE474;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 8px;
-    }
-
-    .btn-icon:hover {
-      background: #2dd966;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(58, 228, 116, 0.3);
-    }
-
-    .btn-icon:first-child {
-      margin-left: 0;
     }
 
     .file-list {
@@ -960,9 +935,10 @@
       <div class="toolbar">
         <div class="breadcrumb" id="breadcrumb"></div>
         <div class="toolbar-actions">
-          <button class="btn-icon" id="createDirBtn" title="Create Directory"><i class="bi bi-folder-plus"></i></button>
-          <button class="btn-icon" id="uploadBtn" title="Upload"><i class="bi bi-cloud-upload"></i></button>
-          <button class="btn-icon" id="newFileBtn" title="New File"><i class="bi bi-file-plus"></i></button>
+          <button class="btn-small btn-secondary" id="createDirBtn"><i class="bi bi-folder-plus"></i> Create
+            Directory</button>
+          <button class="btn-small" id="uploadBtn"><i class="bi bi-cloud-upload"></i> Upload</button>
+          <button class="btn-small" id="newFileBtn"><i class="bi bi-file-plus"></i> New File</button>
         </div>
       </div>
 
