@@ -234,23 +234,6 @@
       overflow-y: auto;
     }
 
-    .sidebar-nav::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .sidebar-nav::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .sidebar-nav::-webkit-scrollbar-thumb {
-      background: rgba(58, 228, 116, 0.3);
-      border-radius: 3px;
-    }
-
-    .sidebar-nav::-webkit-scrollbar-thumb:hover {
-      background: rgba(58, 228, 116, 0.5);
-    }
-
     .nav-item {
       display: flex;
       align-items: center;
@@ -612,61 +595,38 @@
       display: flex;
       flex: 1;
       overflow: hidden;
+      width: 100%;
     }
 
-    .line-numbers {
-      background: #0f0f0f;
-      color: rgba(255, 255, 255, 0.3);
-      padding: 20px 16px;
-      text-align: right;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      user-select: none;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
 
-    .line-numbers::-webkit-scrollbar {
+
+    /* Global scrollbar styling for all elements */
+    ::-webkit-scrollbar {
       width: 8px;
+      height: 8px;
     }
 
-    .line-numbers::-webkit-scrollbar-track {
-      background: transparent;
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
     }
 
-    .line-numbers::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
       background: rgba(58, 228, 116, 0.3);
       border-radius: 4px;
     }
 
-    .line-numbers::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover {
       background: rgba(58, 228, 116, 0.5);
+    }
+
+    .line-numbers {
+      display: none;
     }
 
     .editor-textarea-container {
       flex: 1;
       position: relative;
       overflow: auto;
-    }
-
-    .editor-textarea-container::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    .editor-textarea-container::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .editor-textarea-container::-webkit-scrollbar-thumb {
-      background: rgba(58, 228, 116, 0.3);
-      border-radius: 4px;
-    }
-
-    .editor-textarea-container::-webkit-scrollbar-thumb:hover {
-      background: rgba(58, 228, 116, 0.5);
     }
 
     .editor-textarea {
@@ -684,6 +644,11 @@
       white-space: pre;
       overflow-wrap: normal;
       overflow-x: auto;
+    }
+
+    .editor-textarea::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
 
     .syntax-highlight {
@@ -1028,7 +993,6 @@
         </div>
       </div>
       <div class="editor-content">
-        <div class="line-numbers" id="lineNumbers">1</div>
         <div class="editor-textarea-container">
           <textarea class="editor-textarea" id="editorTextarea" spellcheck="false"></textarea>
         </div>
@@ -1650,12 +1614,7 @@
     }
 
     function updateLineNumbers() {
-      const textarea = document.getElementById('editorTextarea');
-      const lineNumbers = document.getElementById('lineNumbers');
-      const lines = textarea.value.split('\n').length;
-      lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
-      // Sync scroll position
-      lineNumbers.scrollTop = textarea.scrollTop;
+      // Line numbers disabled
     }
 
     function escapeHtml(text) {
