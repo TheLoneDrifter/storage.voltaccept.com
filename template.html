@@ -13,7 +13,40 @@
       box-sizing: border-box;
     }
 
-    /* Updated body background with diagonal arrow pattern */
+    /* Custom Scrollbar Styles for All Elements */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(58, 228, 116, 0.3);
+      border-radius: 4px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(58, 228, 116, 0.5);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    /* Firefox Scrollbar */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(58, 228, 116, 0.3) rgba(255, 255, 255, 0.05);
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
       background: #0f0f0f;
@@ -25,7 +58,6 @@
       overflow: hidden;
     }
 
-    /* Added diagonal arrow pattern background */
     body::before {
       content: '';
       position: fixed;
@@ -48,7 +80,6 @@
       z-index: 0;
     }
 
-    /* Removed animated gradient, using solid dark background */
     .container {
       width: 100%;
       height: 100vh;
@@ -57,7 +88,6 @@
       display: flex;
     }
 
-    /* New login container for centered login form */
     .login-container {
       width: 100%;
       height: 100vh;
@@ -123,7 +153,6 @@
       color: rgba(0, 0, 0, 0.4);
     }
 
-    /* Updated button to match reference with bright green #3AE474 */
     .btn {
       padding: 16px 24px;
       background: #3AE474;
@@ -168,25 +197,6 @@
       display: block;
     }
 
-    .forgot-password {
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .forgot-password a {
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 13px;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: color 0.3s ease;
-    }
-
-    .forgot-password a:hover {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    /* Added notes footer for login page */
     .notes {
       position: fixed;
       bottom: 30px;
@@ -197,7 +207,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* New sidebar navigation styling */
     .sidebar {
       width: 240px;
       background: rgba(18, 18, 18, 0.8);
@@ -252,7 +261,6 @@
       color: rgba(255, 255, 255, 0.9);
     }
 
-    /* Active nav item with green highlight */
     .nav-item.active {
       background: rgba(58, 228, 116, 0.15);
       color: #3AE474;
@@ -264,7 +272,6 @@
       width: 20px;
     }
 
-    /* Main content area styling */
     .main-content {
       flex: 1;
       display: flex;
@@ -272,7 +279,6 @@
       overflow: hidden;
     }
 
-    /* New top header bar for file explorer */
     .top-header {
       background: rgba(18, 18, 18, 0.6);
       backdrop-filter: blur(20px);
@@ -283,35 +289,6 @@
       justify-content: space-between;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .header-link {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 14px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s ease;
-    }
-
-    .header-link:hover {
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* Promo banner styling */
-    /* Removed promo banner styles - not needed for file explorer */
-
     .file-explorer {
       display: none;
       height: 100vh;
@@ -321,7 +298,6 @@
       display: flex;
     }
 
-    /* Updated toolbar styling */
     .toolbar {
       padding: 20px 24px;
       background: rgba(18, 18, 18, 0.4);
@@ -370,7 +346,6 @@
       margin: 0 2px;
     }
 
-    /* Updated button styling with green theme */
     .btn-small {
       padding: 10px 16px;
       margin: 4px;
@@ -411,24 +386,6 @@
       overflow-y: auto;
     }
 
-    .file-list::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .file-list::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .file-list::-webkit-scrollbar-thumb {
-      background: rgba(58, 228, 116, 0.3);
-      border-radius: 4px;
-    }
-
-    .file-list::-webkit-scrollbar-thumb:hover {
-      background: rgba(58, 228, 116, 0.5);
-    }
-
-    /* Updated file item styling */
     .file-item {
       display: flex;
       align-items: center;
@@ -532,7 +489,7 @@
       display: none;
     }
 
-    /* Added file editor modal styling */
+    /* UPDATED FILE EDITOR - SINGLE SCROLLBAR DESIGN */
     .file-editor-modal {
       position: fixed;
       top: 0;
@@ -545,7 +502,6 @@
       display: none;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
 
     .file-editor-modal.show {
@@ -572,6 +528,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .editor-path {
@@ -583,52 +540,48 @@
       gap: 6px;
     }
 
-    .editor-path .path-separator {
-      color: rgba(255, 255, 255, 0.3);
-      margin: 0 4px;
-    }
-
     .editor-actions {
       display: flex;
       gap: 10px;
     }
 
-    .editor-content {
+    /* NEW SINGLE-SCROLLBAR EDITOR LAYOUT */
+    .editor-wrapper {
       display: flex;
       flex: 1;
       overflow: hidden;
-      width: 100%;
+      position: relative;
     }
 
-
-
-    /* Global scrollbar styling for all elements */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+    .editor-line-numbers {
+      background: #0f0f0f;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 20px 16px;
+      text-align: right;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      user-select: none;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      min-width: 60px;
     }
 
-    ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(58, 228, 116, 0.3);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(58, 228, 116, 0.5);
-    }
-
-    .line-numbers {
-      display: none;
-    }
-
-    .editor-textarea-container {
+    .editor-content-wrapper {
       flex: 1;
       position: relative;
       overflow: auto;
+    }
+
+    .editor-textarea-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
 
     .editor-textarea {
@@ -646,66 +599,104 @@
       white-space: pre;
       overflow-wrap: normal;
       overflow-x: auto;
+      min-height: 100%;
+      box-sizing: border-box;
     }
 
-    .editor-textarea::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    .syntax-highlight {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      white-space: pre;
-      overflow-wrap: normal;
-      pointer-events: none;
-      color: transparent;
-    }
-
-    /* Syntax highlighting colors */
-    .syntax-keyword {
-      color: #ff79c6;
-    }
-
-    .syntax-string {
-      color: #f1fa8c;
-    }
-
-    .syntax-comment {
-      color: #6272a4;
-      font-style: italic;
-    }
-
-    .syntax-function {
-      color: #50fa7b;
-    }
-
-    .syntax-number {
-      color: #bd93f9;
-    }
-
-    .syntax-property {
-      color: #8be9fd;
-    }
-
-    .syntax-operator {
-      color: #ff79c6;
-    }
-
-    .syntax-tag {
-      color: #ff79c6;
-    }
-
-    .syntax-attribute {
-      color: #50fa7b;
-    }
+    /* Syntax Highlighting Colors */
+    .syntax-keyword { color: #ff79c6; font-weight: bold; }
+    .syntax-string { color: #f1fa8c; }
+    .syntax-comment { color: #6272a4; font-style: italic; }
+    .syntax-function { color: #50fa7b; }
+    .syntax-number { color: #bd93f9; }
+    .syntax-property { color: #8be9fd; }
+    .syntax-operator { color: #ff79c6; }
+    .syntax-tag { color: #ff79c6; }
+    .syntax-attribute { color: #50fa7b; }
+    .syntax-class { color: #8be9fd; font-weight: bold; }
+    .syntax-constant { color: #ffb86c; }
+    .syntax-builtin { color: #50fa7b; }
+    .syntax-type { color: #8be9fd; }
+    .syntax-macro { color: #ff79c6; }
+    .syntax-regex { color: #f1fa8c; }
+    .syntax-escape { color: #ffb86c; }
+    .syntax-annotation { color: #6272a4; }
+    .syntax-namespace { color: #ff79c6; }
+    .syntax-import { color: #50fa7b; }
+    .syntax-export { color: #50fa7b; }
+    .syntax-module { color: #8be9fd; }
+    .syntax-interface { color: #8be9fd; }
+    .syntax-enum { color: #8be9fd; }
+    .syntax-generic { color: #ffb86c; }
+    .syntax-decorator { color: #50fa7b; }
+    .syntax-async { color: #ff79c6; }
+    .syntax-await { color: #ff79c6; }
+    .syntax-html-tag { color: #ff79c6; }
+    .syntax-html-attribute { color: #50fa7b; }
+    .syntax-html-string { color: #f1fa8c; }
+    .syntax-css-selector { color: #8be9fd; }
+    .syntax-css-property { color: #50fa7b; }
+    .syntax-css-value { color: #ffb86c; }
+    .syntax-json-key { color: #50fa7b; }
+    .syntax-json-string { color: #f1fa8c; }
+    .syntax-json-number { color: #bd93f9; }
+    .syntax-json-boolean { color: #ff79c6; }
+    .syntax-sql-keyword { color: #ff79c6; }
+    .syntax-sql-function { color: #50fa7b; }
+    .syntax-sql-string { color: #f1fa8c; }
+    .syntax-sql-number { color: #bd93f9; }
+    .syntax-shell-command { color: #50fa7b; }
+    .syntax-shell-argument { color: #f1fa8c; }
+    .syntax-shell-variable { color: #8be9fd; }
+    .syntax-yaml-key { color: #50fa7b; }
+    .syntax-yaml-string { color: #f1fa8c; }
+    .syntax-yaml-number { color: #bd93f9; }
+    .syntax-xml-tag { color: #ff79c6; }
+    .syntax-xml-attribute { color: #50fa7b; }
+    .syntax-xml-string { color: #f1fa8c; }
+    .syntax-markdown-heading { color: #ff79c6; font-weight: bold; }
+    .syntax-markdown-bold { color: #ffb86c; font-weight: bold; }
+    .syntax-markdown-italic { color: #ffb86c; font-style: italic; }
+    .syntax-markdown-code { color: #f1fa8c; background: rgba(255, 255, 255, 0.05); padding: 2px 4px; border-radius: 3px; }
+    .syntax-markdown-link { color: #8be9fd; }
+    .syntax-php-tag { color: #ff79c6; }
+    .syntax-php-variable { color: #8be9fd; }
+    .syntax-ruby-symbol { color: #ffb86c; }
+    .syntax-ruby-class { color: #8be9fd; font-weight: bold; }
+    .syntax-go-keyword { color: #ff79c6; }
+    .syntax-go-type { color: #8be9fd; }
+    .syntax-go-function { color: #50fa7b; }
+    .syntax-rust-lifetime { color: #ffb86c; }
+    .syntax-rust-macro { color: #ff79c6; }
+    .syntax-swift-type { color: #8be9fd; }
+    .syntax-swift-function { color: #50fa7b; }
+    .syntax-kotlin-keyword { color: #ff79c6; }
+    .syntax-kotlin-class { color: #8be9fd; }
+    .syntax-typescript-type { color: #8be9fd; font-weight: bold; }
+    .syntax-typescript-interface { color: #8be9fd; }
+    .syntax-python-decorator { color: #50fa7b; }
+    .syntax-python-self { color: #8be9fd; }
+    .syntax-java-annotation { color: #6272a4; }
+    .syntax-java-class { color: #8be9fd; font-weight: bold; }
+    .syntax-csharp-keyword { color: #ff79c6; }
+    .syntax-csharp-type { color: #8be9fd; }
+    .syntax-cpp-keyword { color: #ff79c6; }
+    .syntax-cpp-type { color: #8be9fd; }
+    .syntax-haskell-type { color: #8be9fd; font-weight: bold; }
+    .syntax-haskell-function { color: #50fa7b; }
+    .syntax-elixir-atom { color: #ffb86c; }
+    .syntax-elixir-module { color: #8be9fd; }
+    .syntax-clojure-keyword { color: #ffb86c; }
+    .syntax-clojure-function { color: #50fa7b; }
+    .syntax-lua-table { color: #8be9fd; }
+    .syntax-lua-function { color: #50fa7b; }
+    .syntax-perl-variable { color: #8be9fd; }
+    .syntax-perl-regex { color: #f1fa8c; }
+    .syntax-scala-keyword { color: #ff79c6; }
+    .syntax-scala-type { color: #8be9fd; }
+    .syntax-dart-keyword { color: #ff79c6; }
+    .syntax-dart-type { color: #8be9fd; }
+    .syntax-dart-function { color: #50fa7b; }
 
     @keyframes fadeIn {
       from {
@@ -747,7 +738,6 @@
       }
     }
 
-    /* Added context menu styles */
     .context-menu {
       position: absolute;
       background: rgba(20, 20, 20, 0.98);
@@ -793,7 +783,6 @@
       margin: 4px 0;
     }
 
-    /* Added modal styles for rename/move dialogs */
     .dialog-modal {
       position: fixed;
       top: 0;
@@ -983,7 +972,7 @@
     </div>
   </div>
 
-  <!-- Added file editor modal -->
+  <!-- Updated file editor modal with single scrollbar -->
   <div id="fileEditorModal" class="file-editor-modal">
     <div class="file-editor-container">
       <div class="editor-header">
@@ -993,9 +982,12 @@
           <button class="btn-small btn-secondary" id="closeEditorBtn"><i class="bi bi-x-lg"></i> Close</button>
         </div>
       </div>
-      <div class="editor-content">
-        <div class="editor-textarea-container">
-          <textarea class="editor-textarea" id="editorTextarea" spellcheck="false"></textarea>
+      <div class="editor-wrapper">
+        <div class="editor-line-numbers" id="lineNumbers">1</div>
+        <div class="editor-content-wrapper">
+          <div class="editor-textarea-wrapper">
+            <textarea class="editor-textarea" id="editorTextarea" spellcheck="false"></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -1011,10 +1003,299 @@
     let contextMenu = null;
     let contextMenuItem = null;
 
-    const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB limit
+    const MAX_FILE_SIZE = 500 * 1024 * 1024;
     const BLOCKED_EXTENSIONS = ['exe', 'bat', 'cmd', 'sh', 'scr', 'com', 'pif'];
     const MAX_FILES_PER_UPLOAD = 50;
 
+    // Comprehensive syntax highlighting patterns for all major languages
+    const syntaxPatterns = {
+      // JavaScript/TypeScript
+      'javascript': {
+        patterns: [
+          { regex: /\b(const|let|var|function|class|extends|implements|interface|type|enum|namespace|module|export|import|from|as|default|async|await|yield|typeof|instanceof|in|of|delete|new|this|super|return|break|continue|throw|try|catch|finally|if|else|switch|case|default|for|while|do|with|debugger|void|null|undefined|true|false|Infinity|NaN)\b/g, className: 'syntax-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-class' },
+          { regex: /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, className: 'syntax-function' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|`([^`\\]|\\.)*`)/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' },
+          { regex: /\b(\d+(\.\d+)?)\b/g, className: 'syntax-number' },
+          { regex: /([=!]==|[=!]=|[<>]=?|&&|\|\||[+\-*/%&|^~]|\+\+?|--?|<<|>>|>>>|\?|:)/g, className: 'syntax-operator' },
+          { regex: /\b(console|document|window|Math|JSON|Array|Object|String|Number|Boolean|Date|RegExp|Promise|Set|Map|Symbol|Proxy|Reflect)\b/g, className: 'syntax-builtin' }
+        ]
+      },
+      
+      // Python
+      'python': {
+        patterns: [
+          { regex: /\b(def|class|lambda|if|elif|else|for|while|try|except|finally|with|as|import|from|global|nonlocal|assert|yield|return|break|continue|pass|raise|del|and|or|not|in|is|None|True|False|async|await)\b/g, className: 'syntax-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-class' },
+          { regex: /\b([a-z_][a-zA-Z0-9_]*)\s*\(/g, className: 'syntax-function' },
+          { regex: /("""[\s\S]*?"""|'''[\s\S]*?'''|"([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-string' },
+          { regex: /#.*$/gm, className: 'syntax-comment' },
+          { regex: /\b(self|cls)\b/g, className: 'syntax-python-self' },
+          { regex: /@[a-zA-Z_][a-zA-Z0-9_]*/g, className: 'syntax-python-decorator' },
+          { regex: /\b(\d+(\.\d+)?)\b/g, className: 'syntax-number' }
+        ]
+      },
+      
+      // HTML
+      'html': {
+        patterns: [
+          { regex: /<\/?[a-zA-Z][a-zA-Z0-9:-]*\b/g, className: 'syntax-html-tag' },
+          { regex: /[a-zA-Z-]+(?=\s*=\s*["'])/g, className: 'syntax-html-attribute' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-html-string' },
+          { regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
+          { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
+        ]
+      },
+      
+      // CSS
+      'css': {
+        patterns: [
+          { regex: /([.#]?[a-zA-Z][a-zA-Z0-9_-]*)\s*{/g, className: 'syntax-css-selector' },
+          { regex: /([a-zA-Z-]+)\s*:/g, className: 'syntax-css-property' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|#[0-9a-fA-F]{3,6}|\b\d+(\.\d+)?(%|px|em|rem|vh|vw|vmin|vmax|s|ms)?\b)/g, className: 'syntax-css-value' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' },
+          { regex: /\b(!important|inherit|initial|unset|revert)\b/g, className: 'syntax-keyword' }
+        ]
+      },
+      
+      // Java
+      'java': {
+        patterns: [
+          { regex: /\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|true|false|null)\b/g, className: 'syntax-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-java-class' },
+          { regex: /\b([a-z_][a-zA-Z0-9_]*)\s*\(/g, className: 'syntax-function' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' },
+          { regex: /@[a-zA-Z_][a-zA-Z0-9_]*/g, className: 'syntax-java-annotation' }
+        ]
+      },
+      
+      // C++
+      'cpp': {
+        patterns: [
+          { regex: /\b(alignas|alignof|and|and_eq|asm|auto|bitand|bitor|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|compl|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|not|not_eq|nullptr|operator|or|or_eq|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while|xor|xor_eq)\b/g, className: 'syntax-cpp-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-cpp-type' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // C#
+      'csharp': {
+        patterns: [
+          { regex: /\b(abstract|as|base|bool|break|byte|case|catch|char|checked|class|const|continue|decimal|default|delegate|do|double|else|enum|event|explicit|extern|false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|override|params|private|protected|public|readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile|while|async|await|dynamic|get|set|value|var|yield)\b/g, className: 'syntax-csharp-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-csharp-type' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|@".*?")/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // PHP
+      'php': {
+        patterns: [
+          { regex: /<\?php|\?>/g, className: 'syntax-php-tag' },
+          { regex: /\b(abstract|and|array|as|break|callable|case|catch|class|clone|const|continue|declare|default|die|do|echo|else|elseif|empty|enddeclare|endfor|endforeach|endif|endswitch|endwhile|eval|exit|extends|final|finally|for|foreach|fn|function|global|goto|if|implements|include|include_once|instanceof|insteadof|interface|isset|list|match|namespace|new|or|parent|print|private|protected|public|require|require_once|return|static|switch|throw|trait|try|unset|use|var|while|xor|yield|__halt_compiler)\b/g, className: 'syntax-keyword' },
+          { regex: /\$[a-zA-Z_][a-zA-Z0-9_]*/g, className: 'syntax-php-variable' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-string' },
+          { regex: /\/\/.*$|\#.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // Ruby
+      'ruby': {
+        patterns: [
+          { regex: /\b(alias|and|begin|break|case|class|def|defined\?|do|else|elsif|end|ensure|false|for|if|in|module|next|nil|not|or|redo|rescue|retry|return|self|super|then|true|undef|unless|until|when|while|yield|__ENCODING__|__LINE__|__FILE__)\b/g, className: 'syntax-keyword' },
+          { regex: /:[a-zA-Z_][a-zA-Z0-9_?!]*/g, className: 'syntax-ruby-symbol' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-ruby-class' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|%[qQ]?[({[<].*?[)}\]>]|%[qQ]?[^\w].*?[^\w])/g, className: 'syntax-string' },
+          { regex: /#.*$/gm, className: 'syntax-comment' }
+        ]
+      },
+      
+      // Go
+      'go': {
+        patterns: [
+          { regex: /\b(break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go|goto|if|import|interface|map|package|range|return|select|struct|switch|type|var)\b/g, className: 'syntax-go-keyword' },
+          { regex: /\b(bool|byte|complex64|complex128|error|float32|float64|int|int8|int16|int32|int64|rune|string|uint|uint8|uint16|uint32|uint64|uintptr)\b/g, className: 'syntax-go-type' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-go-type' },
+          { regex: /\b([a-z_][a-zA-Z0-9_]*)\s*\(/g, className: 'syntax-go-function' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|`[\s\S]*?`)/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // Rust
+      'rust': {
+        patterns: [
+          { regex: /\b(as|async|await|break|const|continue|crate|dyn|else|enum|extern|false|fn|for|if|impl|in|let|loop|match|mod|move|mut|pub|ref|return|self|Self|static|struct|super|trait|true|type|unsafe|use|where|while)\b/g, className: 'syntax-keyword' },
+          { regex: /'\w+/g, className: 'syntax-rust-lifetime' },
+          { regex: /![a-zA-Z_][a-zA-Z0-9_]*/g, className: 'syntax-rust-macro' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|b"([^"\\]|\\.)*")/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // Swift
+      'swift': {
+        patterns: [
+          { regex: /\b(associatedtype|class|deinit|enum|extension|fileprivate|func|import|init|inout|internal|let|open|operator|private|protocol|public|static|struct|subscript|typealias|var|break|case|continue|default|defer|do|else|fallthrough|for|guard|if|in|repeat|return|switch|where|while|as|Any|catch|false|is|nil|rethrows|throw|throws|true|try|associativity|convenience|dynamic|didSet|final|get|infix|indirect|lazy|left|mutating|none|nonmutating|optional|override|postfix|precedence|prefix|Protocol|required|right|set|Type|unowned|weak|willSet)\b/g, className: 'syntax-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-swift-type' },
+          { regex: /\b([a-z_][a-zA-Z0-9_]*)\s*\(/g, className: 'syntax-swift-function' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // Kotlin
+      'kotlin': {
+        patterns: [
+          { regex: /\b(as\?|as|break|class|continue|do|else|false|for|fun|if|in|!in|interface|is|!is|null|object|package|return|super|this|throw|true|try|typealias|val|var|when|while|by|catch|constructor|delegate|dynamic|field|file|finally|get|import|init|param|property|receiver|set|setparam|where|actual|abstract|annotation|companion|const|crossinline|data|enum|expect|external|final|infix|inline|inner|internal|lateinit|noinline|open|operator|out|override|private|protected|public|reified|sealed|suspend|tailrec|vararg)\b/g, className: 'syntax-kotlin-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-kotlin-class' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|"""[\s\S]*?""")/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // TypeScript
+      'typescript': {
+        patterns: [
+          { regex: /\b(const|let|var|function|class|extends|implements|interface|type|enum|namespace|module|export|import|from|as|default|async|await|yield|typeof|instanceof|in|of|delete|new|this|super|return|break|continue|throw|try|catch|finally|if|else|switch|case|default|for|while|do|with|debugger|void|null|undefined|true|false|Infinity|NaN)\b/g, className: 'syntax-keyword' },
+          { regex: /\b([A-Z][a-zA-Z0-9_]*)\b/g, className: 'syntax-typescript-type' },
+          { regex: /\b(interface|type)\s+([A-Z][a-zA-Z0-9_]*)/g, className: 'syntax-typescript-interface' },
+          { regex: /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g, className: 'syntax-function' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|`([^`\\]|\\.)*`)/g, className: 'syntax-string' },
+          { regex: /\/\/.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // SQL
+      'sql': {
+        patterns: [
+          { regex: /\b(SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|INSERT INTO|UPDATE|DELETE|CREATE TABLE|ALTER TABLE|DROP TABLE|CREATE INDEX|DROP INDEX|VIEW|JOIN|INNER JOIN|LEFT JOIN|RIGHT JOIN|FULL JOIN|UNION|ALL|DISTINCT|AS|ON|AND|OR|NOT|IN|BETWEEN|LIKE|IS NULL|IS NOT NULL|COUNT|SUM|AVG|MIN|MAX|VALUES|SET|ADD|MODIFY|COLUMN|DATABASE|TABLE|INDEX|PRIMARY KEY|FOREIGN KEY|REFERENCES|UNIQUE|CHECK|DEFAULT|AUTO_INCREMENT|CASCADE|RESTRICT|NO ACTION|SET NULL|SET DEFAULT)\b/gi, className: 'syntax-sql-keyword' },
+          { regex: /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g, className: 'syntax-sql-function' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-sql-string' },
+          { regex: /\b(\d+(\.\d+)?)\b/g, className: 'syntax-sql-number' },
+          { regex: /--.*$/gm, className: 'syntax-comment' },
+          { regex: /\/\*[\s\S]*?\*\//g, className: 'syntax-comment' }
+        ]
+      },
+      
+      // Shell/Bash
+      'shell': {
+        patterns: [
+          { regex: /\b(if|then|else|elif|fi|for|in|do|done|while|until|case|esac|function|select|time|coproc)\b/g, className: 'syntax-keyword' },
+          { regex: /(\$[a-zA-Z_][a-zA-Z0-9_]*|\$\{[^}]*\})/g, className: 'syntax-shell-variable' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|`[\s\S]*?`)/g, className: 'syntax-shell-argument' },
+          { regex: /\b(cd|ls|cp|mv|rm|mkdir|rmdir|cat|grep|find|awk|sed|chmod|chown|echo|export|source|\.|pwd|whoami|ssh|scp|tar|gzip|curl|wget|git|docker|kubectl|npm|yarn|python|node|java|go|rustc|cargo)\b/g, className: 'syntax-shell-command' },
+          { regex: /#.*$/gm, className: 'syntax-comment' }
+        ]
+      },
+      
+      // JSON
+      'json': {
+        patterns: [
+          { regex: /"([^"\\]|\\.)*"(?=\s*:)/g, className: 'syntax-json-key' },
+          { regex: /"([^"\\]|\\.)*"/g, className: 'syntax-json-string' },
+          { regex: /\b(true|false|null)\b/g, className: 'syntax-json-boolean' },
+          { regex: /\b(\d+(\.\d+)?([eE][+-]?\d+)?)\b/g, className: 'syntax-json-number' }
+        ]
+      },
+      
+      // YAML
+      'yaml': {
+        patterns: [
+          { regex: /^[ \t]*([a-zA-Z_][a-zA-Z0-9_-]*)\s*:/gm, className: 'syntax-yaml-key' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-yaml-string' },
+          { regex: /\b(true|false|null|yes|no|on|off)\b/gi, className: 'syntax-json-boolean' },
+          { regex: /\b(\d+(\.\d+)?)\b/g, className: 'syntax-yaml-number' },
+          { regex: /#.*$/gm, className: 'syntax-comment' }
+        ]
+      },
+      
+      // XML
+      'xml': {
+        patterns: [
+          { regex: /<\/?[a-zA-Z][a-zA-Z0-9:-]*\b/g, className: 'syntax-xml-tag' },
+          { regex: /[a-zA-Z-]+(?=\s*=\s*["'])/g, className: 'syntax-xml-attribute' },
+          { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-xml-string' },
+          { regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
+          { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
+        ]
+      },
+      
+      // Markdown
+      'markdown': {
+        patterns: [
+          { regex: /^(#{1,6})\s+(.*)$/gm, className: 'syntax-markdown-heading' },
+          { regex: /\*\*([^*]+)\*\*|__([^_]+)__/g, className: 'syntax-markdown-bold' },
+          { regex: /\*([^*]+)\*|_([^_]+)_/g, className: 'syntax-markdown-italic' },
+          { regex: /`([^`]+)`/g, className: 'syntax-markdown-code' },
+          { regex: /```[a-zA-Z]*\n[\s\S]*?\n```/g, className: 'syntax-markdown-code' },
+          { regex: /\[([^\]]+)\]\(([^)]+)\)/g, className: 'syntax-markdown-link' },
+          { regex: /!\[([^\]]+)\]\(([^)]+)\)/g, className: 'syntax-markdown-link' }
+        ]
+      },
+      
+      // Plain Text (default)
+      'text': {
+        patterns: []
+      }
+    };
+
+    // File extension to language mapping
+    const languageMap = {
+      'js': 'javascript', 'jsx': 'javascript', 'ts': 'typescript', 'tsx': 'typescript',
+      'py': 'python', 'pyw': 'python', 'pyc': 'python', 'pyo': 'python',
+      'html': 'html', 'htm': 'html', 'xhtml': 'html',
+      'css': 'css', 'scss': 'css', 'sass': 'css', 'less': 'css',
+      'java': 'java', 'class': 'java', 'jar': 'java',
+      'cpp': 'cpp', 'cc': 'cpp', 'cxx': 'cpp', 'h': 'cpp', 'hpp': 'cpp',
+      'cs': 'csharp', 'csx': 'csharp',
+      'php': 'php', 'phtml': 'php', 'php3': 'php', 'php4': 'php', 'php5': 'php',
+      'rb': 'ruby', 'erb': 'ruby', 'rake': 'ruby', 'gemspec': 'ruby',
+      'go': 'go',
+      'rs': 'rust', 'rlib': 'rust',
+      'swift': 'swift',
+      'kt': 'kotlin', 'kts': 'kotlin',
+      'sql': 'sql', 'psql': 'sql', 'mysql': 'sql', 'pgsql': 'sql',
+      'sh': 'shell', 'bash': 'shell', 'zsh': 'shell', 'fish': 'shell',
+      'json': 'json', 'jsonc': 'json',
+      'yaml': 'yaml', 'yml': 'yaml',
+      'xml': 'xml', 'xsl': 'xml', 'xslt': 'xml',
+      'md': 'markdown', 'markdown': 'markdown', 'mdown': 'markdown',
+      'txt': 'text', 'text': 'text', 'log': 'text',
+      'c': 'cpp', 'h': 'cpp',
+      'm': 'cpp', // Objective-C
+      'pl': 'perl', 'pm': 'perl',
+      'lua': 'lua',
+      'r': 'r',
+      'scala': 'scala', 'sc': 'scala',
+      'dart': 'dart',
+      'erl': 'erlang', 'hrl': 'erlang',
+      'ex': 'elixir', 'exs': 'elixir',
+      'clj': 'clojure', 'cljs': 'clojure', 'cljc': 'clojure',
+      'hs': 'haskell', 'lhs': 'haskell',
+      'fs': 'fsharp', 'fsx': 'fsharp', 'fsi': 'fsharp',
+      'vim': 'vim', 'vimrc': 'vim',
+      'ini': 'ini', 'cfg': 'ini', 'conf': 'ini',
+      'toml': 'toml',
+      'csv': 'csv',
+      'svg': 'xml',
+      'tex': 'latex', 'bib': 'latex'
+    };
+
+    // DOM Elements
     const loginSection = document.getElementById('loginSection');
     const fileExplorer = document.getElementById('fileExplorer');
     const loginBtn = document.getElementById('loginBtn');
@@ -1031,16 +1312,17 @@
     const dialogModal = document.getElementById('dialogModal');
     const dialogInput = document.getElementById('dialogInput');
     const dialogConfirm = document.getElementById('dialogConfirm');
-    const contextMenuEl = document.getElementById('contextMenu');
+    const editorTextarea = document.getElementById('editorTextarea');
+    const lineNumbers = document.getElementById('lineNumbers');
 
+    // Event Listeners
     window.addEventListener('hashchange', () => {
       const path = window.location.hash.slice(1) || '/';
-      if (path !== currentPath) {
+      if (path !== currentPath && credentials) {
         loadDirectory(path);
       }
     });
 
-    // Check for hash on load
     window.addEventListener('load', () => {
       const hash = window.location.hash.slice(1);
       if (hash && credentials) {
@@ -1055,14 +1337,288 @@
     newFileBtn.addEventListener('click', createNewFile);
     document.getElementById('saveFileBtn').addEventListener('click', saveFile);
     document.getElementById('closeEditorBtn').addEventListener('click', closeEditor);
-    document.getElementById('editorTextarea').addEventListener('input', updateLineNumbers);
-    document.getElementById('editorTextarea').addEventListener('scroll', () => {
-      document.getElementById('lineNumbers').scrollTop = document.getElementById('editorTextarea').scrollTop;
-    });
+    logoutBtn.addEventListener('click', logout);
     passwordInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') login();
     });
 
+    // Editor functionality
+    editorTextarea.addEventListener('input', function() {
+      updateLineNumbers();
+      applySyntaxHighlighting();
+    });
+
+    editorTextarea.addEventListener('scroll', function() {
+      lineNumbers.scrollTop = editorTextarea.scrollTop;
+    });
+
+    // Login function
+    async function login() {
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!username || !password) {
+        showError('Username and password are required');
+        return;
+      }
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Logging in...';
+
+      credentials = btoa(`${username}:${password}`);
+
+      try {
+        const response = await fetch(WEBDAV_URL, {
+          method: 'PROPFIND',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Depth': '0'
+          }
+        });
+
+        if (response.ok) {
+          hideError();
+          loginSection.style.display = 'none';
+          fileExplorer.classList.add('show');
+          loadDirectory('/');
+        } else {
+          showError('Invalid username or password');
+          credentials = null;
+        }
+      } catch (error) {
+        showError('Connection error. Please try again.');
+        credentials = null;
+      }
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Login';
+    }
+
+    // Logout function
+    function logout() {
+      credentials = null;
+      currentPath = '/';
+      window.location.hash = '';
+      loginSection.style.display = 'flex';
+      fileExplorer.classList.remove('show');
+      usernameInput.value = '';
+      passwordInput.value = '';
+      hideError();
+    }
+
+    // Load directory function
+    async function loadDirectory(path) {
+      currentPath = path;
+      window.location.hash = path;
+      updateBreadcrumb();
+      fileList.innerHTML = '<div class="loading">Loading files...</div>';
+
+      try {
+        const url = WEBDAV_URL + path.slice(1);
+        const response = await fetch(url, {
+          method: 'PROPFIND',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Depth': '1'
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load directory');
+
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, 'text/xml');
+        const items = parseWebDAV(xml);
+
+        displayFiles(items);
+      } catch (error) {
+        fileList.innerHTML = '<div class="loading">Error loading files</div>';
+      }
+    }
+
+    // Parse WebDAV response
+    function parseWebDAV(xml) {
+      const responses = xml.getElementsByTagNameNS('DAV:', 'response');
+      const items = [];
+
+      for (let i = 0; i < responses.length; i++) {
+        const response = responses[i];
+        const href = response.getElementsByTagNameNS('DAV:', 'href')[0]?.textContent || '';
+        const propstat = response.getElementsByTagNameNS('DAV:', 'propstat')[0];
+        const prop = propstat?.getElementsByTagNameNS('DAV:', 'prop')[0];
+
+        if (!prop) continue;
+
+        const isCollection = prop.getElementsByTagNameNS('DAV:', 'resourcetype')[0]
+          ?.getElementsByTagNameNS('DAV:', 'collection').length > 0;
+
+        const contentLength = prop.getElementsByTagNameNS('DAV:', 'getcontentlength')[0]?.textContent || '0';
+        const lastModified = prop.getElementsByTagNameNS('DAV:', 'getlastmodified')[0]?.textContent || '';
+
+        const decodedHref = decodeURIComponent(href);
+        if (i === 0) continue;
+
+        const name = decodedHref.split('/').filter(Boolean).pop();
+
+        items.push({
+          name,
+          href: decodedHref,
+          isDirectory: isCollection,
+          size: parseInt(contentLength),
+          modified: new Date(lastModified)
+        });
+      }
+
+      return items;
+    }
+
+    // Display files in the list
+    function displayFiles(items) {
+      if (items.length === 0) {
+        fileList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon"><i class="bi bi-folder-x"></i></div>
+            <div class="empty-state-text">This folder is empty</div>
+          </div>
+        `;
+        return;
+      }
+
+      fileList.innerHTML = '';
+
+      items.forEach(item => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+
+        const icon = item.isDirectory ? '<i class="bi bi-folder-fill"></i>' : getFileIcon(item.name);
+        const sizeText = item.isDirectory ? 'Folder' : formatSize(item.size);
+        const dateText = formatDate(item.modified);
+
+        fileItem.innerHTML = `
+          <div class="file-icon">${icon}</div>
+          <div class="file-info">
+            <div class="file-name">${escapeHtml(item.name)}</div>
+            <div class="file-meta">${dateText} • ${sizeText}</div>
+          </div>
+          <div class="file-actions">
+            <button class="file-action-btn" title="More options">
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+        `;
+
+        const actionBtn = fileItem.querySelector('.file-action-btn');
+        actionBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showContextMenu(e, item);
+        });
+
+        fileItem.addEventListener('click', (e) => {
+          if (e.target.closest('.file-actions')) return;
+
+          if (item.isDirectory) {
+            loadDirectory(currentPath + item.name + '/');
+          } else {
+            openFileEditor(item);
+          }
+        });
+
+        fileList.appendChild(fileItem);
+      });
+    }
+
+    // Open file editor
+    async function openFileEditor(item) {
+      const url = WEBDAV_URL + item.href.replace('/webdav/', '');
+
+      try {
+        const response = await fetch(url, {
+          headers: { 'Authorization': `Basic ${credentials}` }
+        });
+
+        if (!response.ok) throw new Error('Failed to load file');
+
+        const content = await response.text();
+        const modal = document.getElementById('fileEditorModal');
+        const pathDisplay = document.getElementById('editorPath');
+
+        currentEditingFile = {
+          url: url,
+          name: item.name,
+          path: item.href
+        };
+
+        pathDisplay.textContent = item.href.replace('/webdav/', '/home/');
+        editorTextarea.value = content;
+        modal.classList.add('show');
+        
+        updateLineNumbers();
+        applySyntaxHighlighting();
+        
+        setTimeout(() => editorTextarea.focus(), 100);
+      } catch (error) {
+        showNotification('Error loading file: ' + error.message, 'error');
+      }
+    }
+
+    // Apply syntax highlighting
+    function applySyntaxHighlighting() {
+      if (!currentEditingFile) return;
+      
+      const text = editorTextarea.value;
+      const extension = currentEditingFile.name.split('.').pop().toLowerCase();
+      const language = languageMap[extension] || 'text';
+      const patterns = syntaxPatterns[language]?.patterns || [];
+      
+      let highlightedText = escapeHtml(text);
+      
+      patterns.forEach(pattern => {
+        highlightedText = highlightedText.replace(pattern.regex, 
+          match => `<span class="${pattern.className}">${match}</span>`
+        );
+      });
+      
+      const lines = text.split('\n').length;
+      lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+    }
+
+    // Update line numbers
+    function updateLineNumbers() {
+      const lines = editorTextarea.value.split('\n').length;
+      lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+    }
+
+    // Save file
+    async function saveFile() {
+      if (!currentEditingFile) return;
+
+      const content = editorTextarea.value;
+
+      try {
+        const response = await fetch(currentEditingFile.url, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Content-Type': 'text/plain'
+          },
+          body: content
+        });
+
+        if (!response.ok) throw new Error('Failed to save file');
+
+        showNotification('File saved successfully', 'success');
+      } catch (error) {
+        showNotification('Error saving file: ' + error.message, 'error');
+      }
+    }
+
+    // Close editor
+    function closeEditor() {
+      document.getElementById('fileEditorModal').classList.remove('show');
+      currentEditingFile = null;
+    }
+
+    // Create directory
     async function createDirectory() {
       showDialog(
         'Create New Folder',
@@ -1094,6 +1650,7 @@
       );
     }
 
+    // Create new file
     async function createNewFile() {
       showDialog(
         'Create New File',
@@ -1127,6 +1684,7 @@
       );
     }
 
+    // Handle file upload
     async function handleFileUpload(event) {
       const files = Array.from(event.target.files);
 
@@ -1189,240 +1747,7 @@
       fileInput.value = '';
     }
 
-    async function saveFile() {
-      if (!currentEditingFile) return;
-
-      const content = document.getElementById('editorTextarea').value;
-
-      try {
-        const response = await fetch(currentEditingFile.url, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Basic ${credentials}`,
-            'Content-Type': 'text/plain'
-          },
-          body: content
-        });
-
-        if (!response.ok) throw new Error('Failed to save file');
-
-        showNotification('File saved successfully', 'success');
-      } catch (error) {
-        showNotification('Error saving file: ' + error.message, 'error');
-      }
-    }
-
-    function closeEditor() {
-      document.getElementById('fileEditorModal').classList.remove('show');
-      currentEditingFile = null;
-    }
-
-    async function login() {
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value;
-
-      if (!username || !password) {
-        showError('A username or email must be provided.');
-        return;
-      }
-
-      if (!password) {
-        showError('Please enter your account password.');
-        return;
-      }
-
-      loginBtn.disabled = true;
-      loginBtn.textContent = 'Logging in...';
-
-      credentials = btoa(`${username}:${password}`);
-
-      try {
-        const response = await fetch(WEBDAV_URL, {
-          method: 'PROPFIND',
-          headers: {
-            'Authorization': `Basic ${credentials}`,
-            'Depth': '0'
-          }
-        });
-
-        if (response.ok) {
-          hideError();
-          loginSection.style.display = 'none';
-          fileExplorer.classList.add('show');
-          loadDirectory('/');
-        } else {
-          showError('Invalid username or password');
-          credentials = null;
-        }
-      } catch (error) {
-        showError('Connection error. Please try again.');
-        credentials = null;
-      }
-
-      loginBtn.disabled = false;
-      loginBtn.textContent = 'Login';
-    }
-
-    logoutBtn.addEventListener('click', () => {
-      credentials = null;
-      currentPath = '/';
-      window.location.hash = '';
-      loginSection.style.display = 'flex';
-      fileExplorer.classList.remove('show');
-      usernameInput.value = '';
-      passwordInput.value = '';
-      hideError();
-      window.location.reload();
-    });
-
-    async function loadDirectory(path) {
-      currentPath = path;
-      window.location.hash = path;
-      updateBreadcrumb();
-      fileList.innerHTML = '<div class="loading">Loading files...</div>';
-
-      try {
-        const url = WEBDAV_URL + path.slice(1);
-        const response = await fetch(url, {
-          method: 'PROPFIND',
-          headers: {
-            'Authorization': `Basic ${credentials}`,
-            'Depth': '1'
-          }
-        });
-
-        if (!response.ok) throw new Error('Failed to load directory');
-
-        const text = await response.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, 'text/xml');
-        const items = parseWebDAV(xml);
-
-        displayFiles(items);
-      } catch (error) {
-        fileList.innerHTML = '<div class="loading">Error loading files</div>';
-      }
-    }
-
-    function parseWebDAV(xml) {
-      const responses = xml.getElementsByTagNameNS('DAV:', 'response');
-      const items = [];
-
-      for (let i = 0; i < responses.length; i++) {
-        const response = responses[i];
-        const href = response.getElementsByTagNameNS('DAV:', 'href')[0]?.textContent || '';
-        const propstat = response.getElementsByTagNameNS('DAV:', 'propstat')[0];
-        const prop = propstat?.getElementsByTagNameNS('DAV:', 'prop')[0];
-
-        if (!prop) continue;
-
-        const isCollection = prop.getElementsByTagNameNS('DAV:', 'resourcetype')[0]
-          ?.getElementsByTagNameNS('DAV:', 'collection').length > 0;
-
-        const contentLength = prop.getElementsByTagNameNS('DAV:', 'getcontentlength')[0]?.textContent || '0';
-        const lastModified = prop.getElementsByTagNameNS('DAV:', 'getlastmodified')[0]?.textContent || '';
-
-        const decodedHref = decodeURIComponent(href);
-        if (i === 0) continue;
-
-        const name = decodedHref.split('/').filter(Boolean).pop();
-
-        items.push({
-          name,
-          href: decodedHref,
-          isDirectory: isCollection,
-          size: parseInt(contentLength),
-          modified: new Date(lastModified)
-        });
-      }
-
-      return items;
-    }
-
-    function displayFiles(items) {
-      if (items.length === 0) {
-        fileList.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon"><i class="bi bi-folder-x"></i></div>
-            <div class="empty-state-text">This folder is empty</div>
-          </div>
-        `;
-        return;
-      }
-
-      fileList.innerHTML = '';
-
-      items.forEach(item => {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-
-        const icon = item.isDirectory ? '<i class="bi bi-folder-fill"></i>' : getFileIcon(item.name);
-        const sizeText = item.isDirectory ? 'Folder' : formatSize(item.size);
-        const dateText = formatDate(item.modified);
-
-        fileItem.innerHTML = `
-          <div class="file-icon">${icon}</div>
-          <div class="file-info">
-            <div class="file-name">${escapeHtml(item.name)}</div>
-            <div class="file-meta">${dateText}</div>
-          </div>
-          <div class="file-actions">
-            <button class="file-action-btn" title="More options">
-              <i class="bi bi-three-dots"></i>
-            </button>
-          </div>
-        `;
-
-        const actionBtn = fileItem.querySelector('.file-action-btn');
-        actionBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          showContextMenu(e, item);
-        });
-
-        fileItem.addEventListener('click', (e) => {
-          if (e.target.closest('.file-actions')) return;
-
-          if (item.isDirectory) {
-            loadDirectory(currentPath + item.name + '/');
-          } else {
-            openFileEditor(item);
-          }
-        });
-
-        fileList.appendChild(fileItem);
-      });
-    }
-
-    async function openFileEditor(item) {
-      const url = WEBDAV_URL + item.href.replace('/webdav/', '');
-
-      try {
-        const response = await fetch(url, {
-          headers: { 'Authorization': `Basic ${credentials}` }
-        });
-
-        if (!response.ok) throw new Error('Failed to load file');
-
-        const content = await response.text();
-        const modal = document.getElementById('fileEditorModal');
-        const textarea = document.getElementById('editorTextarea');
-        const pathDisplay = document.getElementById('editorPath');
-
-        currentEditingFile = {
-          url: url,
-          name: item.name,
-          path: item.href
-        };
-
-        pathDisplay.textContent = item.href.replace('/webdav/', '/home/');
-        textarea.value = content;
-        modal.classList.add('show');
-        updateLineNumbers();
-      } catch (error) {
-        showNotification('Error loading file: ' + error.message, 'error');
-      }
-    }
-
+    // Show context menu
     function showContextMenu(e, item) {
       e.preventDefault();
       e.stopPropagation();
@@ -1430,7 +1755,6 @@
       const menu = document.getElementById('contextMenu');
       contextMenuItem = item;
 
-      // Build menu items based on type
       let menuHTML = '';
 
       if (!item.isDirectory) {
@@ -1466,23 +1790,23 @@
       menu.innerHTML = menuHTML;
       menu.classList.add('show');
 
-      // Position menu to the left of the mouse
       const menuWidth = menu.offsetWidth;
       menu.style.left = (e.pageX - menuWidth) + 'px';
       menu.style.top = e.pageY + 'px';
 
-      // Close menu when clicking outside
       setTimeout(() => {
         document.addEventListener('click', closeContextMenu);
       }, 0);
     }
 
+    // Close context menu
     function closeContextMenu() {
       const menu = document.getElementById('contextMenu');
       menu.classList.remove('show');
       document.removeEventListener('click', closeContextMenu);
     }
 
+    // Show dialog
     function showDialog(title, placeholder, value, callback) {
       const modal = document.getElementById('dialogModal');
       const titleEl = document.getElementById('dialogTitle');
@@ -1508,11 +1832,13 @@
       };
     }
 
+    // Close dialog
     function closeDialog() {
       const modal = document.getElementById('dialogModal');
       modal.classList.remove('show');
     }
 
+    // Rename file
     async function renameFile() {
       if (!contextMenuItem) return;
 
@@ -1547,6 +1873,7 @@
       );
     }
 
+    // Move file
     async function moveFile() {
       if (!contextMenuItem || contextMenuItem.isDirectory) return;
 
@@ -1557,14 +1884,7 @@
         async (destPath) => {
           if (!destPath || destPath === currentPath) return;
 
-          // Ensure path ends with /
           if (!destPath.endsWith('/')) destPath += '/';
-
-          // Ensure path starts with /home/
-          if (!destPath.startsWith('/home/')) {
-            showNotification('Path must start with /home/', 'error');
-            return;
-          }
 
           const oldUrl = WEBDAV_URL + contextMenuItem.href.replace('/webdav/', '');
           const newUrl = WEBDAV_URL + destPath + contextMenuItem.name;
@@ -1589,6 +1909,7 @@
       );
     }
 
+    // Delete file
     async function deleteFile() {
       if (!contextMenuItem) return;
 
@@ -1614,10 +1935,7 @@
       }
     }
 
-    function updateLineNumbers() {
-      // Line numbers disabled
-    }
-
+    // Helper functions
     function escapeHtml(text) {
       const div = document.createElement('div');
       div.textContent = text;
@@ -1639,8 +1957,6 @@
 
       breadcrumb.innerHTML = '';
 
-      // Root
-
       const rootSeperator = document.createElement('span');
       rootSeperator.className = 'breadcrumb-separator';
       rootSeperator.textContent = '/';
@@ -1651,16 +1967,13 @@
       root.addEventListener('click', () => loadDirectory('/'));
       breadcrumb.appendChild(root);
 
-      // Build path parts
       let accumulatedPath = '/';
       parts.forEach((part, index) => {
-        // Add separator
         const separator = document.createElement('span');
         separator.className = 'breadcrumb-separator';
         separator.textContent = '/';
         breadcrumb.appendChild(separator);
 
-        // Add path segment
         const segment = document.createElement('span');
         segment.className = 'breadcrumb-item';
         if (index === parts.length - 1) {
@@ -1668,7 +1981,6 @@
         }
         segment.textContent = part;
 
-        // Calculate actual path (restore container if it was replaced)
         const actualPart = (displayPath === currentPath) ? part :
           (index === 0 && part === 'home' ? 'home/container' : part);
         accumulatedPath += actualPart + '/';
@@ -1755,5 +2067,4 @@
     }
   </script>
 </body>
-
 </html>
