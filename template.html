@@ -690,7 +690,7 @@
       loginBtn.disabled = true;
       loginBtn.textContent = 'Logging in...';
 
-      credentials = `${username}:${btoa(password)}`;
+      credentials = btoa(`${username}:${password}`);
 
       try {
         const response = await fetch(WEBDAV_URL, {
@@ -864,14 +864,14 @@
       const files = Array.from(e.target.files);
       
       if (files.length > MAX_FILES_PER_UPLOAD) {
-        alert(`You can only upload up to ${MAX_FILES_PER_UPLOAD} files at once.`);
+        showTemporaryMessage(`You can only upload up to ${MAX_FILES_PER_UPLOAD} files at once.`, true);
         fileInput.value = '';
         return;
       }
 
       const invalidFiles = validateFiles(files);
       if (invalidFiles.length > 0) {
-        alert(`Cannot upload:\n${invalidFiles.join('\n')}`);
+        showTemporaryMessage(`Cannot upload:\n${invalidFiles.join('\n')}`, true);
         fileInput.value = '';
         return;
       }
