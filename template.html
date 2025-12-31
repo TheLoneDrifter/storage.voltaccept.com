@@ -1889,12 +1889,10 @@
           { regex: /<\/?[a-zA-Z][a-zA-Z0-9:-]*\b/g, className: 'syntax-html-tag' },
           { regex: /[a-zA-Z-]+(?=\s*=\s*["'])/g, className: 'syntax-html-attribute' },
           { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-html-string' },
-          { regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
           { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
         ]
       },
 
-      // CSS
       'css': {
         patterns: [
           { regex: /([.#]?[a-zA-Z][a-zA-Z0-9_-]*)\s*{/g, className: 'syntax-css-selector' },
@@ -2352,7 +2350,7 @@
           loginSection.style.display = 'none';
           fileExplorer.classList.add('show');
           loadDirectory('/');
-          calculateStorageUsage()
+          updateStorageInfo();
         } else {
           showError('Invalid username or password');
           credentials = null;
@@ -2378,6 +2376,43 @@
       hideError();
 
       window.location.reload();
+    }
+
+    // Helper function to format bytes
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Update storage info from WebDAV server
+    async function updateStorageInfo() {
+      try {
+        const response = await fetch(WEBDAV_URL, {
+          method: 'PROPFIND',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Depth': '0'
+          }
+        });
+        if (!response.ok) throw new Error('Failed to get storage info');
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        // Look for quota properties (adjust selectors based on server response)
+        const usedElement = xmlDoc.querySelector('quota-used-bytes') || xmlDoc.querySelector('D\\:quota-used-bytes');
+        const availableElement = xmlDoc.querySelector('quota-available-bytes') || xmlDoc.querySelector('D\\:quota-available-bytes');
+        const used = usedElement ? parseInt(usedElement.textContent) : 0;
+        const available = availableElement ? parseInt(availableElement.textContent) : 1;
+        const total = used + available;
+        const percent = Math.min((used / total) * 100, 100);
+        document.getElementById('storageProgressFill').style.width = percent + '%';
+        document.getElementById('storageText').textContent = formatBytes(used) + ' / ' + formatBytes(total);
+      } catch (error) {
+        document.getElementById('storageText').textContent = 'Unable to load storage info';
+      }
     }
 
     // Load directory function
@@ -2671,48 +2706,6 @@
       );
     }
 
-    // Add these variables
-    let storageCache = {
-      timestamp: 0,
-      value: 0,
-      ttl: 5 * 60 * 1000 // 5 minutes cache
-    };
-
-    // Optimized storage calculation
-    async function getStorageUsageOptimized() {
-      const now = Date.now();
-
-      // Return cached value if still valid
-      if (storageCache.timestamp && (now - storageCache.timestamp) < storageCache.ttl) {
-        return storageCache.value;
-      }
-
-      // Calculate fresh value
-      const usage = await calculateStorageUsage();
-      storageCache = {
-        timestamp: now,
-        value: usage,
-        ttl: 5 * 60 * 1000
-      };
-
-      return usage;
-    }
-
-    // Call this periodically or after file operations
-    function updateStoragePeriodically() {
-      setInterval(async () => {
-        await calculateStorageUsage();
-        updateStorageDisplay();
-      }, 300000); // Update every 5 minutes
-    }
-
-    // Call after file uploads/downloads/deletions
-    async function updateStorageAfterOperation() {
-      storageCache.timestamp = 0; // Invalidate cache
-      await calculateStorageUsage();
-      updateStorageDisplay();
-    }
-
     // Handle file upload
     async function handleFileUpload(event) {
       const files = Array.from(event.target.files);
@@ -2832,10 +2825,6 @@
 
               if (!response.ok && response.status !== 405) {
                 console.warn(`Failed to create directory: ${currentDir}`);
-              }
-
-              if (response.ok) {
-                  await updateStorageAfterOperation();
               }
             } catch (error) {
               console.warn(`Error creating directory: ${currentDir}`, error);
