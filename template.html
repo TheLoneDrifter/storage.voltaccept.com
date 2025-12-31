@@ -1028,7 +1028,7 @@
         </div>
       </div>
       <div class="editor-content">
-        <span class="line-numbers" id="lineNumbers">1</span>
+        <div class="line-numbers" id="lineNumbers">1</div>
         <div class="editor-textarea-container">
           <textarea class="editor-textarea" id="editorTextarea" spellcheck="false"></textarea>
         </div>
@@ -1653,7 +1653,7 @@
       const textarea = document.getElementById('editorTextarea');
       const lineNumbers = document.getElementById('lineNumbers');
       const lines = textarea.value.split('\n').length;
-      lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
+      lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
       // Sync scroll position
       lineNumbers.scrollTop = textarea.scrollTop;
     }
