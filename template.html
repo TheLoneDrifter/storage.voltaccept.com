@@ -1031,9 +1031,175 @@
     });
 
     loginBtn.addEventListener('click', login);
+    uploadBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', handleFileUpload);
+    createDirBtn.addEventListener('click', createDirectory);
+    newFileBtn.addEventListener('click', createNewFile);
+    document.getElementById('saveFileBtn').addEventListener('click', saveFile);
+    document.getElementById('closeEditorBtn').addEventListener('click', closeEditor);
+    document.getElementById('editorTextarea').addEventListener('input', updateLineNumbers);
     passwordInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') login();
     });
+
+    document.getElementById('editorTextarea').addEventListener('input', updateLineNumbers);
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
+
+    async function createDirectory() {
+      showDialog(
+        'Create New Folder',
+        'Enter folder name',
+        'New Folder',
+        async (folderName) => {
+          if (!folderName) return;
+
+          folderName = sanitizeFilename(folderName);
+          const newPath = currentPath + folderName + '/';
+          const url = WEBDAV_URL + newPath;
+
+          try {
+            const response = await fetch(url, {
+              method: 'MKCOL',
+              headers: {
+                'Authorization': `Basic ${credentials}`
+              }
+            });
+
+            if (!response.ok) throw new Error('Failed to create directory');
+
+            showNotification('Folder created successfully', 'success');
+            loadDirectory(currentPath);
+          } catch (error) {
+            showNotification('Error creating folder: ' + error.message, 'error');
+          }
+        }
+      );
+    }
+
+    async function createNewFile() {
+      showDialog(
+        'Create New File',
+        'Enter file name',
+        'NewFile.txt',
+        async (fileName) => {
+          if (!fileName) return;
+
+          fileName = sanitizeFilename(fileName);
+          const newPath = currentPath + fileName;
+          const url = WEBDAV_URL + newPath;
+
+          try {
+            const response = await fetch(url, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Basic ${credentials}`,
+                'Content-Type': 'text/plain'
+              },
+              body: ''
+            });
+
+            if (!response.ok) throw new Error('Failed to create file');
+
+            showNotification('File created successfully', 'success');
+            loadDirectory(currentPath);
+          } catch (error) {
+            showNotification('Error creating file: ' + error.message, 'error');
+          }
+        }
+      );
+    }
+
+    async function handleFileUpload(event) {
+      const files = Array.from(event.target.files);
+
+      if (files.length === 0) return;
+
+      if (files.length > MAX_FILES_PER_UPLOAD) {
+        showNotification(`Maximum ${MAX_FILES_PER_UPLOAD} files per upload`, 'error');
+        return;
+      }
+
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const file of files) {
+        const extension = file.name.split('.').pop().toLowerCase();
+
+        if (BLOCKED_EXTENSIONS.includes(extension)) {
+          showNotification(`File type .${extension} is not allowed`, 'error');
+          errorCount++;
+          continue;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+          showNotification(`File ${file.name} exceeds maximum size of 500MB`, 'error');
+          errorCount++;
+          continue;
+        }
+
+        try {
+          const sanitizedName = sanitizeFilename(file.name);
+          const uploadPath = currentPath + sanitizedName;
+          const url = WEBDAV_URL + uploadPath;
+
+          const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Basic ${credentials}`,
+              'Content-Type': file.type || 'application/octet-stream'
+            },
+            body: file
+          });
+
+          if (!response.ok) throw new Error('Upload failed');
+          successCount++;
+        } catch (error) {
+          console.error('Upload error:', error);
+          errorCount++;
+        }
+      }
+
+      if (successCount > 0) {
+        showNotification(`${successCount} file(s) uploaded successfully`, 'success');
+        loadDirectory(currentPath);
+      }
+
+      if (errorCount > 0) {
+        showNotification(`${errorCount} file(s) failed to upload`, 'error');
+      }
+
+      fileInput.value = '';
+    }
+
+    async function saveFile() {
+      if (!currentEditingFile) return;
+
+      const content = document.getElementById('editorTextarea').value;
+
+      try {
+        const response = await fetch(currentEditingFile.url, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Content-Type': 'text/plain'
+          },
+          body: content
+        });
+
+        if (!response.ok) throw new Error('Failed to save file');
+
+        showNotification('File saved successfully', 'success');
+      } catch (error) {
+        showNotification('Error saving file: ' + error.message, 'error');
+      }
+    }
+
+    function closeEditor() {
+      document.getElementById('fileEditorModal').classList.remove('show');
+      currentEditingFile = null;
+    }
 
     async function login() {
       const username = usernameInput.value.trim();
@@ -1090,6 +1256,7 @@
       usernameInput.value = '';
       passwordInput.value = '';
       hideError();
+      window.location.reload();
     });
 
     async function loadDirectory(path) {
