@@ -1598,41 +1598,6 @@
       transform: none;
       background: rgba(255, 255, 255, 0.1);
     }
-
-    /* Simple version CSS */
-    .storage-simple {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 9px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .storage-dots {
-      display: flex;
-      gap: 2px;
-    }
-
-    .storage-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    .storage-dot.active {
-      background: #3AE474;
-    }
-
-    .nav-item.active .storage-dot {
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .nav-item.active .storage-dot.active {
-      background: #3AE474;
-      box-shadow: 0 0 4px #3AE474;
-    }
   </style>
 </head>
 
@@ -1676,21 +1641,9 @@
       </div>
 
       <nav class="sidebar-nav">
-        <div class="nav-item active" id="filesNavItem">
-          <div class="nav-item-content">
-            <i class="bi bi-folder-fill"></i>
-            <div class="nav-item-text">
-              <span>Files</span>
-              <div class="storage-info">
-                <div class="storage-progress">
-                  <div class="storage-progress-bar" id="storageProgressBar">
-                    <div class="storage-progress-fill" id="storageProgressFill"></div>
-                  </div>
-                  <div class="storage-text" id="storageText">Loading...</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="nav-item active">
+          <i class="bi bi-folder-fill"></i>
+          <span>Files</span>
         </div>
         <div class="nav-item" id="logoutBtn">
           <i class="bi bi-box-arrow-right"></i>
@@ -1889,10 +1842,13 @@
           { regex: /<\/?[a-zA-Z][a-zA-Z0-9:-]*\b/g, className: 'syntax-html-tag' },
           { regex: /[a-zA-Z-]+(?=\s*=\s*["'])/g, className: 'syntax-html-attribute' },
           { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-html-string' },
-          { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
+          {
+            regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
+              { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
         ]
       },
 
+      // CSS
       'css': {
         patterns: [
           { regex: /([.#]?[a-zA-Z][a-zA-Z0-9_-]*)\s*{/g, className: 'syntax-css-selector' },
@@ -2350,7 +2306,6 @@
           loginSection.style.display = 'none';
           fileExplorer.classList.add('show');
           loadDirectory('/');
-          updateStorageInfo();
         } else {
           showError('Invalid username or password');
           credentials = null;
@@ -2376,35 +2331,6 @@
       hideError();
 
       window.location.reload();
-    }
-
-    // Helper function to format bytes
-    function formatBytes(bytes) {
-      if (bytes === 0) return '0 B';
-      const k = 1024;
-      const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    // Update storage info from server quota endpoint
-    async function updateStorageInfo() {
-      try {
-        const response = await fetch('http://storage.voltaccept.com/quota.php', {
-          headers: {
-            'Authorization': `Basic ${credentials}`
-          }
-        });
-        if (!response.ok) throw new Error('Failed to get storage info');
-        const data = await response.json();
-        const used = data.used || 0;
-        const total = data.total || 1;
-        const percent = Math.min((used / total) * 100, 100);
-        document.getElementById('storageProgressFill').style.width = percent + '%';
-        document.getElementById('storageText').textContent = formatBytes(used) + ' / ' + formatBytes(total);
-      } catch (error) {
-        document.getElementById('storageText').textContent = 'Unable to load storage info';
-      }
     }
 
     // Load directory function
