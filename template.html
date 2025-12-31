@@ -2070,6 +2070,28 @@
       'svg': 'xml',
       'tex': 'latex', 'bib': 'latex'
     };
+
+    // URL helper function to avoid duplicate /webdav/
+    function getFullUrl(path) {
+      // If path already includes /webdav/, clean it
+      let cleanPath = path;
+
+      // Remove /webdav/ if present at the beginning
+      if (cleanPath.includes('/webdav/')) {
+        cleanPath = cleanPath.replace('/webdav/', '');
+      }
+
+      // Remove any leading slashes
+      while (cleanPath.startsWith('/')) {
+        cleanPath = cleanPath.substring(1);
+      }
+
+      // Ensure WEBDAV_URL ends with /
+      const baseUrl = WEBDAV_URL.endsWith('/') ? WEBDAV_URL : WEBDAV_URL + '/';
+
+      return baseUrl + cleanPath;
+    }
+
     // Audio player variables
     let currentAudioFile = null;
     let currentAudioIndex = 0;
@@ -2856,54 +2878,85 @@
       showNotification('Preparing folder download...', 'info');
 
       // Load JSZip if not already loaded
-      await loadJSZip().catch(() => {
-        showNotification('Error loading ZIP library', 'error');
-        return;
-      });
+      if (!window.JSZip) {
+        try {
+          await loadJSZip();
+        } catch (error) {
+          showNotification('Error loading ZIP library', 'error');
+          return;
+        }
+      }
 
       const zip = new JSZip();
-      // Ensure folderPath doesn't have trailing slash for proper replacement
-      let folderPath = contextMenuItem.href.replace('/webdav/', '');
+      const folderName = contextMenuItem.name;
+
+      // Get clean folder path without webdav prefix
+      let folderPath = contextMenuItem.href;
+
+      // Remove /webdav/ prefix if present
+      if (folderPath.includes('/webdav/')) {
+        folderPath = folderPath.replace('/webdav/', '');
+      }
+
+      // Remove trailing slash if present
       if (folderPath.endsWith('/')) {
         folderPath = folderPath.slice(0, -1);
       }
 
       try {
-        // Recursively get all files in the folder
-        const files = await getAllFilesInDirectory(folderPath);
+        // Collect all files recursively
+        const allFiles = [];
+        await collectFilesRecursively(folderPath, allFiles, folderPath);
 
-        if (files.length === 0) {
+        if (allFiles.length === 0) {
           showNotification('Folder is empty', 'warning');
           return;
         }
 
-        showNotification(`Adding ${files.length} files to ZIP...`, 'info');
+        showNotification(`Adding ${allFiles.length} files to ZIP...`, 'info');
 
-        // Add each file to the ZIP with correct relative paths
-        for (const file of files) {
-          const fileUrl = getFullUrl(file.href);
-          const response = await fetch(fileUrl, {
-            headers: { 'Authorization': `Basic ${credentials}` }
-          });
+        // Add files to ZIP
+        for (let i = 0; i < allFiles.length; i++) {
+          const file = allFiles[i];
 
-          if (response.ok) {
-            const blob = await response.blob();
-            // Get relative path by removing the folder path
-            let relativePath = file.href;
-            if (relativePath.startsWith(folderPath)) {
-              relativePath = relativePath.substring(folderPath.length);
+          try {
+            // Get file URL
+            const fileUrl = getFullUrl(file.path);
+            const response = await fetch(fileUrl, {
+              headers: { 'Authorization': `Basic ${credentials}` }
+            });
+
+            if (response.ok) {
+              const blob = await response.blob();
+
+              // Calculate relative path
+              let relativePath = file.path;
+
+              // Remove the base folder path
+              if (relativePath.startsWith(folderPath + '/')) {
+                relativePath = relativePath.substring(folderPath.length + 1);
+              }
+
+              // Remove any remaining /webdav/ prefix
+              if (relativePath.includes('/webdav/')) {
+                relativePath = relativePath.replace('/webdav/', '');
+              }
+
+              // Add to ZIP
+              zip.file(relativePath, blob);
             }
-            // Remove leading slash if present
-            if (relativePath.startsWith('/')) {
-              relativePath = relativePath.substring(1);
-            }
-            // Add file to zip with relative path
-            zip.file(relativePath, blob);
+          } catch (error) {
+            console.warn(`Failed to add ${file.name} to ZIP:`, error);
+          }
+
+          // Update progress every 5 files
+          if ((i + 1) % 5 === 0 || i === allFiles.length - 1) {
+            showNotification(`Added ${i + 1} of ${allFiles.length} files...`, 'info');
           }
         }
 
-        // Generate ZIP file
-        showNotification('Generating ZIP file...', 'info');
+        // Generate ZIP
+        showNotification('Compressing files...', 'info');
         const content = await zip.generateAsync({
           type: 'blob',
           compression: "DEFLATE",
@@ -2916,15 +2969,72 @@
         const downloadUrl = window.URL.createObjectURL(content);
         const link = document.createElement('a');
         link.href = downloadUrl;
-        link.download = `${contextMenuItem.name}.zip`;
+        link.download = `${folderName}.zip`;
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(downloadUrl);
 
-        showNotification('Folder downloaded as ZIP successfully', 'success');
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(downloadUrl);
+        }, 100);
+
+        showNotification(`${allFiles.length} files downloaded as ${folderName}.zip`, 'success');
       } catch (error) {
-        showNotification('Error downloading folder: ' + error.message, 'error');
+        console.error('ZIP creation error:', error);
+        showNotification('Error creating ZIP: ' + error.message, 'error');
+      }
+    }
+
+    async function collectFilesRecursively(path, fileList = [], basePath = '') {
+      try {
+        // Construct URL
+        let urlPath = path;
+
+        // Remove /webdav/ if present
+        if (urlPath.includes('/webdav/')) {
+          urlPath = urlPath.replace('/webdav/', '');
+        }
+
+        const url = WEBDAV_URL + urlPath;
+
+        const response = await fetch(url, {
+          method: 'PROPFIND',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Depth': '1'
+          }
+        });
+
+        if (!response.ok) return;
+
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(text, 'text/xml');
+        const items = parseWebDAV(xml);
+
+        for (const item of items) {
+          if (item.isDirectory) {
+            // Recursively get files in subdirectory
+            await collectFilesRecursively(item.href, fileList, basePath || path);
+          } else {
+            // Add file to list with clean path
+            let filePath = item.href;
+
+            // Remove /webdav/ if present
+            if (filePath.includes('/webdav/')) {
+              filePath = filePath.replace('/webdav/', '');
+            }
+
+            fileList.push({
+              name: item.name,
+              path: filePath,
+              size: item.size
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error collecting files:', error);
       }
     }
 
