@@ -946,6 +946,7 @@
         <div class="toolbar-actions">
           <button class="btn-small btn-secondary" id="createDirBtn"><i class="bi bi-folder-plus"></i></button>
           <button class="btn-small" id="uploadBtn"><i class="bi bi-cloud-upload"></i></button>
+          <button class="btn-small" id="uploadFolderBtn"><i class="bi bi-folder2-open"></i></button>
           <button class="btn-small" id="newFileBtn"><i class="bi bi-file-plus"></i></button>
         </div>
       </div>
@@ -994,6 +995,7 @@
   </div>
 
   <input type="file" id="fileInput" multiple>
+  <input type="file" id="folderInput" webkitdirectory multiple style="display: none">
 
   <script>
     const WEBDAV_URL = 'http://storage.voltaccept.com/webdav/';
@@ -1314,6 +1316,8 @@
     const dialogConfirm = document.getElementById('dialogConfirm');
     const editorTextarea = document.getElementById('editorTextarea');
     const lineNumbers = document.getElementById('lineNumbers');
+    const uploadFolderBtn = document.getElementById('uploadFolderBtn');
+    const folderInput = document.getElementById('folderInput');
 
     // Event Listeners
     window.addEventListener('hashchange', () => {
@@ -1334,6 +1338,8 @@
     uploadBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', handleFileUpload);
     createDirBtn.addEventListener('click', createDirectory);
+    uploadFolderBtn.addEventListener('click', () => folderInput.click());
+    folderInput.addEventListener('change', handleFolderUpload);
     newFileBtn.addEventListener('click', createNewFile);
     document.getElementById('saveFileBtn').addEventListener('click', saveFile);
     document.getElementById('closeEditorBtn').addEventListener('click', closeEditor);
@@ -1747,6 +1753,126 @@
       fileInput.value = '';
     }
 
+    // Handle folder upload
+    async function handleFolderUpload(event) {
+      const items = Array.from(event.target.files);
+      
+      if (items.length === 0) return;
+      
+      if (items.length > MAX_FILES_PER_UPLOAD) {
+        showNotification(`Maximum ${MAX_FILES_PER_UPLOAD} files per upload`, 'error');
+        return;
+      }
+      
+      let successCount = 0;
+      let errorCount = 0;
+      let folderStructure = {};
+      
+      // First, build the folder structure and create directories
+      for (const file of items) {
+        const relativePath = file.webkitRelativePath;
+        const pathParts = relativePath.split('/');
+        const fileName = pathParts.pop();
+        const folderPath = pathParts.join('/');
+        
+        // Store file in structure
+        if (!folderStructure[folderPath]) {
+          folderStructure[folderPath] = [];
+        }
+        folderStructure[folderPath].push({ file, fileName });
+      }
+      
+      // Create directories first
+      const allFolders = Object.keys(folderStructure).sort((a, b) => a.split('/').length - b.split('/').length);
+      
+      for (const folderPath of allFolders) {
+        if (!folderPath) continue; // Skip root folder
+        
+        const folderParts = folderPath.split('/');
+        let currentPath = currentPath;
+        
+        // Create nested directories
+        for (const folderName of folderParts) {
+          const sanitizedFolderName = sanitizeFilename(folderName);
+          const newFolderPath = currentPath + sanitizedFolderName + '/';
+          const url = WEBDAV_URL + newFolderPath;
+          
+          try {
+            const response = await fetch(url, {
+              method: 'MKCOL',
+              headers: {
+                'Authorization': `Basic ${credentials}`
+              }
+            });
+            
+            // 405 (Method Not Allowed) means folder already exists, which is fine
+            if (!response.ok && response.status !== 405) {
+              throw new Error('Failed to create directory');
+            }
+            
+            currentPath = newFolderPath;
+          } catch (error) {
+            console.error('Error creating folder:', error);
+            errorCount++;
+          }
+        }
+      }
+      
+      // Now upload all files
+      for (const [folderPath, files] of Object.entries(folderStructure)) {
+        const basePath = folderPath ? currentPath + folderPath + '/' : currentPath;
+        
+        for (const { file, fileName } of files) {
+          const extension = fileName.split('.').pop().toLowerCase();
+          
+          if (BLOCKED_EXTENSIONS.includes(extension)) {
+            showNotification(`File type .${extension} is not allowed`, 'error');
+            errorCount++;
+            continue;
+          }
+          
+          if (file.size > MAX_FILE_SIZE) {
+            showNotification(`File ${fileName} exceeds maximum size of 500MB`, 'error');
+            errorCount++;
+            continue;
+          }
+          
+          try {
+            const sanitizedName = sanitizeFilename(fileName);
+            const uploadPath = basePath + sanitizedName;
+            const url = WEBDAV_URL + uploadPath;
+            
+            const response = await fetch(url, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Basic ${credentials}`,
+                'Content-Type': file.type || 'application/octet-stream'
+              },
+              body: file
+            });
+            
+            if (!response.ok) throw new Error('Upload failed');
+            successCount++;
+          } catch (error) {
+            console.error('Upload error:', error);
+            errorCount++;
+          }
+        }
+      }
+      
+      // Show results
+      if (successCount > 0) {
+        showNotification(`${successCount} file(s) uploaded successfully from folder`, 'success');
+        loadDirectory(currentPath);
+      }
+      
+      if (errorCount > 0) {
+        showNotification(`${errorCount} file(s) failed to upload`, 'error');
+      }
+      
+      folderInput.value = '';
+    }
+    
     // Show context menu
     function showContextMenu(e, item) {
       e.preventDefault();
