@@ -2862,88 +2862,48 @@
       });
 
       const zip = new JSZip();
-      const folderName = contextMenuItem.name;
-      // Get clean folder path without webdav prefix
-      let folderPath = contextMenuItem.href;
-      if (folderPath.includes('/webdav/')) {
-        folderPath = folderPath.replace('/webdav/', '');
-      }
-
-      // Remove trailing slash if present
+      // Ensure folderPath doesn't have trailing slash for proper replacement
+      let folderPath = contextMenuItem.href.replace('/webdav/', '');
       if (folderPath.endsWith('/')) {
         folderPath = folderPath.slice(0, -1);
       }
 
       try {
-        // Get all files recursively
-        const allFiles = [];
-        await collectFilesRecursively(folderPath, allFiles);
+        // Recursively get all files in the folder
+        const files = await getAllFilesInDirectory(folderPath);
 
-        if (allFiles.length === 0) {
+        if (files.length === 0) {
           showNotification('Folder is empty', 'warning');
           return;
         }
 
-        showNotification(`Adding ${allFiles.length} files to ZIP...`, 'info');
+        showNotification(`Adding ${files.length} files to ZIP...`, 'info');
 
-        // Track progress for better UX
-        let processed = 0;
-        const total = allFiles.length;
+        // Add each file to the ZIP with correct relative paths
+        for (const file of files) {
+          const fileUrl = getFullUrl(file.href);
+          const response = await fetch(fileUrl, {
+            headers: { 'Authorization': `Basic ${credentials}` }
+          });
 
-        // Add files to ZIP
-        for (const file of allFiles) {
-          const fileUrl = getFullUrl(file.path);
-
-          try {
-            const response = await fetch(fileUrl, {
-              headers: { 'Authorization': `Basic ${credentials}` }
-            });
-
-            if (response.ok) {
-              const blob = await response.blob();
-              // Calculate relative path by removing the base folder path
-              let relativePath = file.path;
-              if (relativePath.startsWith(folderPath + '/')) {
-                relativePath = relativePath.substring(folderPath.length + 1);
-              }
-
-              // Create folder structure in zip
-              const pathParts = relativePath.split('/');
-              if (pathParts.length > 1) {
-                // File is in a subdirectory
-                const fileName = pathParts.pop();
-                let currentFolder = zip;
-
-                // Create folder structure
-                for (const folder of pathParts) {
-                  if (!currentFolder.folder(folder)) {
-                    currentFolder = currentFolder.folder(folder);
-                  } else {
-                    currentFolder = currentFolder.folder(folder);
-                  }
-                }
-
-                // Add file to the appropriate folder
-                currentFolder.file(fileName, blob);
-              } else {
-                // File is in the root of the zip
-                zip.file(relativePath, blob);
-              }
+          if (response.ok) {
+            const blob = await response.blob();
+            // Get relative path by removing the folder path
+            let relativePath = file.href;
+            if (relativePath.startsWith(folderPath)) {
+              relativePath = relativePath.substring(folderPath.length);
             }
-          } catch (error) {
-            console.warn(`Failed to add ${file.name} to ZIP:`, error);
-          }
-
-          processed++;
-
-          // Update progress every 10 files
-          if (processed % 10 === 0) {
-            showNotification(`Added ${processed} of ${total} files...`, 'info');
+            // Remove leading slash if present
+            if (relativePath.startsWith('/')) {
+              relativePath = relativePath.substring(1);
+            }
+            // Add file to zip with relative path
+            zip.file(relativePath, blob);
           }
         }
 
-        // Generate ZIP with progress indicator
-        showNotification('Compressing files...', 'info');
+        // Generate ZIP file
+        showNotification('Generating ZIP file...', 'info');
         const content = await zip.generateAsync({
           type: 'blob',
           compression: "DEFLATE",
@@ -2956,57 +2916,15 @@
         const downloadUrl = window.URL.createObjectURL(content);
         const link = document.createElement('a');
         link.href = downloadUrl;
-        link.download = `${folderName}.zip`;
+        link.download = `${contextMenuItem.name}.zip`;
         document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
 
-        // Clean up
-        setTimeout(() => {
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(downloadUrl);
-        }, 100);
-
-        showNotification(`${allFiles.length} files downloaded as ${folderName}.zip`, 'success');
+        showNotification('Folder downloaded as ZIP successfully', 'success');
       } catch (error) {
-        console.error('ZIP creation error:', error);
-        showNotification('Error creating ZIP: ' + error.message, 'error');
-      }
-    }
-
-    // Helper function to collect all files recursively
-    async function collectFilesRecursively(path, fileList = []) {
-      try {
-        const url = getFullUrl(path);
-        const response = await fetch(url, {
-          method: 'PROPFIND',
-          headers: {
-            'Authorization': `Basic ${credentials}`,
-            'Depth': '1'
-          }
-        });
-
-        if (!response.ok) return;
-
-        const text = await response.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, 'text/xml');
-        const items = parseWebDAV(xml);
-
-        for (const item of items) {
-          if (item.isDirectory) {
-            // Recursively get files in subdirectory
-            await collectFilesRecursively(item.href, fileList);
-          } else {
-            // Add file to list
-            fileList.push({
-              name: item.name,
-              path: item.href,
-              size: item.size
-            });
-          }
-        }
-      } catch (error) {
-        console.error('Error collecting files:', error);
+        showNotification('Error downloading folder: ' + error.message, 'error');
       }
     }
 
