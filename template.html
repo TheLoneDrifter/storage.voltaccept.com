@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoltaTECH Storage - File Explorer</title>
-  <!-- Added Bootstrap Icons CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     * {
@@ -13,184 +12,139 @@
       box-sizing: border-box;
     }
 
-    /* iOS 26 Liquid Glass Dark Theme with animated gradients */
+    /* Updated body background with diagonal arrow pattern */
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0a;
+      background: #0f0f0f;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
       position: relative;
       overflow: hidden;
     }
 
+    /* Added diagonal arrow pattern background */
     body::before {
       content: '';
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
-      animation: liquidMove 20s ease-in-out infinite;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0f0f0f;
+      background-image: 
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 35px,
+          rgba(255, 255, 255, 0.015) 35px,
+          rgba(255, 255, 255, 0.015) 70px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 35px,
+          rgba(255, 255, 255, 0.01) 35px,
+          rgba(255, 255, 255, 0.01) 70px
+        );
       z-index: 0;
     }
 
-    @keyframes liquidMove {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(5%, -5%) rotate(120deg); }
-      66% { transform: translate(-5%, 5%) rotate(240deg); }
-    }
-
+    /* Removed animated gradient, using solid dark background */
     .container {
-      background: rgba(18, 18, 18, 0.6);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-        0 0 60px rgba(139, 92, 246, 0.1);
       width: 100%;
-      max-width: 1000px;
-      overflow: hidden;
+      height: 100vh;
       position: relative;
       z-index: 1;
+      display: flex;
     }
 
-    .header {
-      background: linear-gradient(135deg, rgba(120, 119, 198, 0.4) 0%, rgba(139, 92, 246, 0.4) 100%);
-      backdrop-filter: blur(20px);
-      color: white;
-      padding: 32px 24px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      animation: headerGlow 8s ease-in-out infinite;
-    }
-
-    @keyframes headerGlow {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(10%, 10%); }
-    }
-
-    .header h1 {
-      font-size: 32px;
-      margin-bottom: 8px;
-      font-weight: 600;
-      position: relative;
-      z-index: 1;
+    /* New login container for centered login form */
+    .login-container {
+      width: 100%;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-    }
-
-    .header p {
-      opacity: 0.8;
-      font-size: 15px;
       position: relative;
       z-index: 1;
-      font-weight: 400;
-      letter-spacing: 0.3px;
     }
 
     .login-form {
-      padding: 48px 40px;
+      background: rgb(27, 27, 27);
+      padding: 60px 40px 50px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      border-radius: 12px;
+      gap: 20px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .login-form h2 {
+      color: white;
+      font-size: 26px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .form-group label {
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 14px;
-      letter-spacing: 0.3px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .form-group input {
       padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.05);
+      background: white;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      font-size: 16px;
-      color: white;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #1a1a1a;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
     }
 
     .form-group input:focus {
       outline: none;
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(139, 92, 246, 0.5);
-      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+      background: white;
+      border-color: #3AE474;
+      box-shadow: 0 0 0 3px rgba(58, 228, 116, 0.1);
     }
 
     .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(0, 0, 0, 0.4);
     }
 
+    /* Updated button to match reference with bright green #3AE474 */
     .btn {
       padding: 16px 24px;
-      background: linear-gradient(135deg, rgba(120, 119, 198, 0.8) 0%, rgba(139, 92, 246, 0.8) 100%);
+      background: #3AE474;
       color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
+      border: none;
+      border-radius: 10px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    .btn:hover::before {
-      width: 300px;
-      height: 300px;
+      margin-top: 8px;
+      text-transform: capitalize;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
-      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 24px rgba(58, 228, 116, 0.4);
+      background: #2dd966;
     }
 
     .btn:active {
@@ -198,39 +152,182 @@
     }
 
     .btn:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
       transform: none;
     }
 
     .error-message {
       background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #fca5a5;
-      padding: 14px 18px;
-      border-radius: 12px;
-      font-size: 14px;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ff6b6b;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
       display: none;
-      backdrop-filter: blur(10px);
     }
 
     .error-message.show {
       display: block;
     }
 
+    .forgot-password {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .forgot-password a {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 13px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-password a:hover {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Added notes footer for login page */
+    .notes {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* New sidebar navigation styling */
+    .sidebar {
+      width: 240px;
+      background: rgba(18, 18, 18, 0.8);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #3AE474;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .sidebar-logo i {
+      font-size: 24px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 0;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Active nav item with green highlight */
+    .nav-item.active {
+      background: rgba(58, 228, 116, 0.15);
+      color: #3AE474;
+      border-left-color: #3AE474;
+    }
+
+    .nav-item i {
+      font-size: 18px;
+      width: 20px;
+    }
+
+    /* Main content area styling */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* New top header bar for file explorer */
+    .top-header {
+      background: rgba(18, 18, 18, 0.6);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-link {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s ease;
+    }
+
+    .header-link:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Promo banner styling */
+    /* Removed promo banner styles - not needed for file explorer */
+
     .file-explorer {
       display: none;
-      flex-direction: column;
-      height: 600px;
+      height: 100vh;
     }
 
     .file-explorer.show {
       display: flex;
     }
 
+    /* Updated toolbar styling */
     .toolbar {
-      padding: 16px 24px;
-      background: rgba(255, 255, 255, 0.03);
+      padding: 20px 24px;
+      background: rgba(18, 18, 18, 0.4);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
@@ -250,18 +347,18 @@
     }
 
     .breadcrumb-item {
-      color: rgba(139, 92, 246, 0.9);
+      color: rgba(255, 255, 255, 0.6);
       cursor: pointer;
       font-weight: 500;
       font-size: 14px;
       transition: all 0.2s ease;
-      padding: 4px 8px;
+      padding: 6px 10px;
       border-radius: 6px;
     }
 
     .breadcrumb-item:hover {
-      background: rgba(139, 92, 246, 0.1);
-      color: rgba(139, 92, 246, 1);
+      background: rgba(58, 228, 116, 0.1);
+      color: #3AE474;
     }
 
     .breadcrumb-separator {
@@ -275,42 +372,41 @@
       flex-wrap: wrap;
     }
 
+    /* Updated button styling with green theme */
     .btn-small {
-      padding: 10px 16px;
+      padding: 10px 18px;
       font-size: 14px;
-      background: rgba(139, 92, 246, 0.2);
-      color: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      border-radius: 10px;
+      background: #3AE474;
+      color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .btn-small:hover {
-      background: rgba(139, 92, 246, 0.3);
-      border-color: rgba(139, 92, 246, 0.5);
+      background: #2dd966;
       transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(58, 228, 116, 0.3);
     }
 
-    .btn-logout {
-      background: rgba(239, 68, 68, 0.2);
-      border-color: rgba(239, 68, 68, 0.3);
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    .btn-logout:hover {
-      background: rgba(239, 68, 68, 0.3);
-      border-color: rgba(239, 68, 68, 0.5);
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
     }
 
     .file-list {
       flex: 1;
       overflow-y: auto;
-      padding: 0;
     }
 
     .file-list::-webkit-scrollbar {
@@ -322,14 +418,15 @@
     }
 
     .file-list::-webkit-scrollbar-thumb {
-      background: rgba(139, 92, 246, 0.3);
+      background: rgba(58, 228, 116, 0.3);
       border-radius: 4px;
     }
 
     .file-list::-webkit-scrollbar-thumb:hover {
-      background: rgba(139, 92, 246, 0.5);
+      background: rgba(58, 228, 116, 0.5);
     }
 
+    /* Updated file item styling */
     .file-item {
       display: flex;
       align-items: center;
@@ -337,12 +434,19 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       cursor: pointer;
       transition: all 0.2s ease;
-      background: rgba(255, 255, 255, 0);
+      background: transparent;
     }
 
     .file-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
+      background: rgba(58, 228, 116, 0.08);
+    }
+
+    .file-checkbox {
+      width: 20px;
+      height: 20px;
+      margin-right: 16px;
+      cursor: pointer;
+      accent-color: #3AE474;
     }
 
     .file-icon {
@@ -353,14 +457,15 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      color: rgba(139, 92, 246, 0.8);
-      background: rgba(139, 92, 246, 0.1);
+      color: #3AE474;
+      background: rgba(58, 228, 116, 0.1);
       border-radius: 10px;
-      border: 1px solid rgba(139, 92, 246, 0.2);
+      border: 1px solid rgba(58, 228, 116, 0.2);
     }
 
     .file-info {
       flex: 1;
+      min-width: 0;
     }
 
     .file-name {
@@ -374,6 +479,34 @@
       font-size: 13px;
       color: rgba(255, 255, 255, 0.4);
       letter-spacing: 0.2px;
+    }
+
+    .file-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .file-item:hover .file-actions {
+      opacity: 1;
+    }
+
+    .file-action-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      padding: 6px;
+      font-size: 16px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .file-action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .loading {
@@ -393,7 +526,7 @@
       font-size: 64px;
       margin-bottom: 20px;
       opacity: 0.4;
-      color: rgba(139, 92, 246, 0.5);
+      color: rgba(58, 228, 116, 0.5);
     }
 
     .empty-state-text {
@@ -405,7 +538,6 @@
       display: none;
     }
 
-    /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -414,18 +546,45 @@
     .file-item {
       animation: fadeIn 0.3s ease;
     }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: -240px;
+        transition: left 0.3s ease;
+        z-index: 100;
+      }
+      
+      .sidebar.show {
+        left: 0;
+      }
+      
+      .login-form {
+        padding: 60px 24px 40px;
+      }
+      
+      .login-form h2 {
+        font-size: 24px;
+      }
+    }
+
+    /* Added CSS animations for temporary messages */
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(400px); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <!-- Replaced emoji with Bootstrap icon -->
-      <h1><i class="bi bi-hdd-rack"></i> VoltaTECH Storage</h1>
-      <p>WebDAV File Explorer</p>
-    </div>
-
-    <!-- Login Form -->
-    <div id="loginSection" class="login-form">
+  <!-- Login container separate from file explorer -->
+  <div id="loginSection" class="login-container">
+    <div class="login-form">
+      <h2>Login to Continue</h2>
+      
       <div class="error-message" id="errorMessage"></div>
       
       <div class="form-group">
@@ -438,39 +597,69 @@
         <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
       </div>
 
-      <button class="btn" id="loginBtn">Login to Storage</button>
+      <button class="btn" id="loginBtn">Login</button>
+    </div>
+    
+    <div class="notes">Coded By VoltacceptYT over at <a href="https://www.voltaccept.com/" target="_blank">Voltarian Technologies (VoltaTECH)</a></div>
+  </div>
+
+  <!-- File Explorer with sidebar layout -->
+  <div id="fileExplorer" class="container file-explorer">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <i class="bi bi-hexagon-fill"></i>
+          <span>VoltaTECH</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="nav-item active">
+          <i class="bi bi-folder-fill"></i>
+          <span>Files</span>
+        </div>
+        <div class="nav-item" id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Logout</span>
+        </div>
+      </nav>
     </div>
 
-    <!-- File Explorer -->
-    <div id="fileExplorer" class="file-explorer">
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Toolbar -->
       <div class="toolbar">
         <div class="breadcrumb" id="breadcrumb"></div>
         <div class="toolbar-actions">
-          <!-- Added Bootstrap icons to buttons -->
+          <button class="btn-small btn-secondary" id="createDirBtn"><i class="bi bi-folder-plus"></i> Create Directory</button>
           <button class="btn-small" id="uploadBtn"><i class="bi bi-cloud-upload"></i> Upload</button>
-          <button class="btn-small" id="refreshBtn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
-          <button class="btn-small btn-logout" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+          <button class="btn-small" id="newFileBtn"><i class="bi bi-file-plus"></i> New File</button>
         </div>
       </div>
+
+      <!-- File List -->
       <div class="file-list" id="fileList">
         <div class="loading">Loading files...</div>
       </div>
     </div>
-
-    <input type="file" id="fileInput" multiple>
   </div>
 
+  <input type="file" id="fileInput" multiple>
+
   <script>
-    const WEBDAV_URL = 'http://storage.voltaccept.com/webdav/';
+    const WEBDAV_URL = 'http://storage.voltaccept.com/storage/';
     let credentials = null;
     let currentPath = '/';
 
-    // DOM Elements
+    const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB limit
+    const BLOCKED_EXTENSIONS = ['exe', 'bat', 'cmd', 'sh', 'scr', 'com', 'pif'];
+    const MAX_FILES_PER_UPLOAD = 50;
+
     const loginSection = document.getElementById('loginSection');
     const fileExplorer = document.getElementById('fileExplorer');
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
     const uploadBtn = document.getElementById('uploadBtn');
     const fileInput = document.getElementById('fileInput');
     const fileList = document.getElementById('fileList');
@@ -479,7 +668,6 @@
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
 
-    // Login
     loginBtn.addEventListener('click', login);
     passwordInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') login();
@@ -490,7 +678,12 @@
       const password = passwordInput.value;
 
       if (!username || !password) {
-        showError('Please enter both username and password');
+        showError('A username or email must be provided.');
+        return;
+      }
+
+      if (!password) {
+        showError('Please enter your account password.');
         return;
       }
 
@@ -523,10 +716,9 @@
       }
 
       loginBtn.disabled = false;
-      loginBtn.textContent = 'Login to Storage';
+      loginBtn.textContent = 'Login';
     }
 
-    // Logout
     logoutBtn.addEventListener('click', () => {
       credentials = null;
       currentPath = '/';
@@ -537,7 +729,6 @@
       hideError();
     });
 
-    // Load Directory
     async function loadDirectory(path) {
       currentPath = path;
       updateBreadcrumb();
@@ -566,7 +757,6 @@
       }
     }
 
-    // Parse WebDAV XML Response
     function parseWebDAV(xml) {
       const responses = xml.getElementsByTagNameNS('DAV:', 'response');
       const items = [];
@@ -585,7 +775,6 @@
         const contentLength = prop.getElementsByTagNameNS('DAV:', 'getcontentlength')[0]?.textContent || '0';
         const lastModified = prop.getElementsByTagNameNS('DAV:', 'getlastmodified')[0]?.textContent || '';
 
-        // Skip the current directory itself
         const decodedHref = decodeURIComponent(href);
         if (i === 0) continue;
 
@@ -625,14 +814,22 @@
         const dateText = formatDate(item.modified);
 
         fileItem.innerHTML = `
+          <input type="checkbox" class="file-checkbox">
           <div class="file-icon">${icon}</div>
           <div class="file-info">
             <div class="file-name">${escapeHtml(item.name)}</div>
-            <div class="file-meta">${sizeText} • ${dateText}</div>
+            <div class="file-meta">${dateText}</div>
+          </div>
+          <div class="file-actions">
+            <button class="file-action-btn" title="More options">
+              <i class="bi bi-three-dots"></i>
+            </button>
           </div>
         `;
 
-        fileItem.addEventListener('click', () => {
+        fileItem.addEventListener('click', (e) => {
+          if (e.target.type === 'checkbox' || e.target.closest('.file-actions')) return;
+          
           if (item.isDirectory) {
             loadDirectory(currentPath + item.name + '/');
           } else {
@@ -644,14 +841,12 @@
       });
     }
 
-    // Download File
     function downloadFile(item) {
       const url = WEBDAV_URL + item.href.replace('/webdav/', '');
       const a = document.createElement('a');
       a.href = url;
       a.download = item.name;
       
-      // Add authorization header via fetch and create blob URL
       fetch(url, {
         headers: { 'Authorization': `Basic ${credentials}` }
       })
@@ -664,112 +859,139 @@
       });
     }
 
-    // Upload File
     uploadBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', async (e) => {
       const files = Array.from(e.target.files);
       
-      for (const file of files) {
-        await uploadFile(file);
+      if (files.length > MAX_FILES_PER_UPLOAD) {
+        alert(`You can only upload up to ${MAX_FILES_PER_UPLOAD} files at once.`);
+        fileInput.value = '';
+        return;
+      }
+
+      const invalidFiles = validateFiles(files);
+      if (invalidFiles.length > 0) {
+        alert(`Cannot upload:\n${invalidFiles.join('\n')}`);
+        fileInput.value = '';
+        return;
       }
       
+      uploadBtn.disabled = true;
+      uploadBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Uploading...';
+      
+      let uploadedCount = 0;
+      for (const file of files) {
+        const success = await uploadFile(file);
+        if (success) uploadedCount++;
+      }
+      
+      uploadBtn.disabled = false;
+      uploadBtn.innerHTML = '<i class="bi bi-cloud-upload"></i> Upload';
       fileInput.value = '';
-      loadDirectory(currentPath);
+      
+      if (uploadedCount > 0) {
+        loadDirectory(currentPath);
+      }
+      
+      if (uploadedCount === files.length) {
+        showTemporaryMessage(`Successfully uploaded ${uploadedCount} file(s)`);
+      } else {
+        showTemporaryMessage(`Uploaded ${uploadedCount} of ${files.length} file(s)`, true);
+      }
     });
 
+    function validateFiles(files) {
+      const errors = [];
+      
+      for (const file of files) {
+        // Check file size
+        if (file.size > MAX_FILE_SIZE) {
+          errors.push(`${file.name} - File too large (max ${formatSize(MAX_FILE_SIZE)})`);
+          continue;
+        }
+        
+        // Check for blocked extensions
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (BLOCKED_EXTENSIONS.includes(ext)) {
+          errors.push(`${file.name} - File type not allowed`);
+          continue;
+        }
+        
+        // Check for path traversal attempts in filename
+        if (file.name.includes('..') || file.name.includes('/') || file.name.includes('\\')) {
+          errors.push(`${file.name} - Invalid filename`);
+          continue;
+        }
+        
+        // Check for null bytes
+        if (file.name.includes('\0')) {
+          errors.push(`${file.name} - Invalid filename`);
+          continue;
+        }
+      }
+      
+      return errors;
+    }
+
     async function uploadFile(file) {
-      const url = WEBDAV_URL + currentPath.slice(1) + file.name;
+      // Sanitize filename
+      const safeName = sanitizeFilename(file.name);
+      const url = WEBDAV_URL + currentPath.slice(1) + encodeURIComponent(safeName);
       
       try {
-        await fetch(url, {
+        const response = await fetch(url, {
           method: 'PUT',
           headers: {
-            'Authorization': `Basic ${credentials}`
+            'Authorization': `Basic ${credentials}`,
+            'Content-Type': file.type || 'application/octet-stream'
           },
           body: file
         });
+        
+        if (!response.ok) {
+          console.error(`Upload failed for ${file.name}:`, response.status);
+          return false;
+        }
+        
+        return true;
       } catch (error) {
         console.error('Upload failed:', error);
+        return false;
       }
     }
-
-    // Refresh
-    refreshBtn.addEventListener('click', () => loadDirectory(currentPath));
-
-    // Update Breadcrumb
-    function updateBreadcrumb() {
-      const parts = currentPath.split('/').filter(Boolean);
-      breadcrumb.innerHTML = '';
-
-      // Home
-      const home = document.createElement('span');
-      home.className = 'breadcrumb-item';
-      home.innerHTML = '<i class="bi bi-house-door-fill"></i> Home';
-      home.addEventListener('click', () => loadDirectory('/'));
-      breadcrumb.appendChild(home);
-
-      // Path parts
-      let accPath = '/';
-      parts.forEach((part, index) => {
-        const sep = document.createElement('span');
-        sep.className = 'breadcrumb-separator';
-        sep.innerHTML = '<i class="bi bi-chevron-right"></i>';
-        breadcrumb.appendChild(sep);
-
-        accPath += part + '/';
-        const item = document.createElement('span');
-        item.className = 'breadcrumb-item';
-        item.textContent = decodeURIComponent(part);
-        
-        const pathCopy = accPath;
-        item.addEventListener('click', () => loadDirectory(pathCopy));
-        breadcrumb.appendChild(item);
-      });
+    
+    function sanitizeFilename(filename) {
+      return filename
+        .replace(/[<>:"|?*]/g, '_')
+        .replace(/\.\./g, '_')
+        .replace(/^\./, '_')
+        .trim();
     }
-
-    // Utility Functions
-    function formatSize(bytes) {
-      if (bytes === 0) return '0 B';
-      const k = 1024;
-      const sizes = ['B', 'KB', 'MB', 'GB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-    }
-
-    function formatDate(date) {
-      if (!date || isNaN(date)) return 'Unknown';
-      return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function getFileIcon(filename) {
-      const ext = filename.split('.').pop().toLowerCase();
-      const icons = {
-        'pdf': '<i class="bi bi-file-pdf-fill"></i>',
-        'doc': '<i class="bi bi-file-word-fill"></i>',
-        'docx': '<i class="bi bi-file-word-fill"></i>',
-        'xls': '<i class="bi bi-file-excel-fill"></i>',
-        'xlsx': '<i class="bi bi-file-excel-fill"></i>',
-        'ppt': '<i class="bi bi-file-ppt-fill"></i>',
-        'pptx': '<i class="bi bi-file-ppt-fill"></i>',
-        'jpg': '<i class="bi bi-file-image-fill"></i>',
-        'jpeg': '<i class="bi bi-file-image-fill"></i>',
-        'png': '<i class="bi bi-file-image-fill"></i>',
-        'gif': '<i class="bi bi-file-image-fill"></i>',
-        'svg': '<i class="bi bi-file-image-fill"></i>',
-        'mp4': '<i class="bi bi-file-play-fill"></i>',
-        'mov': '<i class="bi bi-file-play-fill"></i>',
-        'avi': '<i class="bi bi-file-play-fill"></i>',
-        'mp3': '<i class="bi bi-file-music-fill"></i>',
-        'wav': '<i class="bi bi-file-music-fill"></i>',
-        'zip': '<i class="bi bi-file-zip-fill"></i>',
-        'rar': '<i class="bi bi-file-zip-fill"></i>',
-        '7z': '<i class="bi bi-file-zip-fill"></i>',
-        'txt': '<i class="bi bi-file-text-fill"></i>',
-        'html': '<i class="bi bi-file-code-fill"></i>',
-        'css': '<i class="bi bi-file-code-fill"></i>',
-        'js': '<i class="bi bi-file-code-fill"></i>',
-      };
-      return icons[ext] || '<i class="bi bi-file-earmark-fill"></i>';
+    
+    function showTemporaryMessage(message, isError = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(58, 228, 116, 0.95)'};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 10000;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        animation: slideIn 0.3s ease;
+      `;
+      messageDiv.textContent = message;
+      document.body.appendChild(messageDiv);
+      
+      setTimeout(() => {
+        messageDiv.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => messageDiv.remove(), 300);
+      }, 3000);
     }
 
     function escapeHtml(text) {
@@ -785,6 +1007,31 @@
 
     function hideError() {
       errorMessage.classList.remove('show');
+    }
+
+    function updateBreadcrumb() {
+      // Implement breadcrumb update logic here
+    }
+
+    function getFileIcon(filename) {
+      // Implement file icon logic here
+      return '<i class="bi bi-file-earmark-fill"></i>';
+    }
+
+    function formatSize(size) {
+      // Implement file size formatting logic here
+      const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+      let i = 0;
+      while (size >= 1024 && i < units.length - 1) {
+        size /= 1024;
+        i++;
+      }
+      return `${size.toFixed(2)} ${units[i]}`;
+    }
+
+    function formatDate(date) {
+      // Implement date formatting logic here
+      return date.toLocaleString();
     }
   </script>
 </body>
