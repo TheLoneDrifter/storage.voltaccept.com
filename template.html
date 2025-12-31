@@ -1005,7 +1005,6 @@
     let contextMenu = null;
     let contextMenuItem = null;
 
-    const MAX_FILE_SIZE = 500 * 1024 * 1024;
     const BLOCKED_EXTENSIONS = ['exe', 'bat', 'cmd', 'sh', 'scr', 'com', 'pif'];
     const MAX_FILES_PER_UPLOAD = 50;
 
@@ -1713,12 +1712,6 @@
           continue;
         }
 
-        if (file.size > MAX_FILE_SIZE) {
-          showNotification(`File ${file.name} exceeds maximum size of 500MB`, 'error');
-          errorCount++;
-          continue;
-        }
-
         try {
           const sanitizedName = sanitizeFilename(file.name);
           const uploadPath = currentPath + sanitizedName;
@@ -1827,12 +1820,6 @@
           
           if (BLOCKED_EXTENSIONS.includes(extension)) {
             showNotification(`File type .${extension} is not allowed`, 'error');
-            errorCount++;
-            continue;
-          }
-          
-          if (file.size > MAX_FILE_SIZE) {
-            showNotification(`File ${fileName} exceeds maximum size of 500MB`, 'error');
             errorCount++;
             continue;
           }
