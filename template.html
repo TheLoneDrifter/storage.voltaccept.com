@@ -1598,6 +1598,41 @@
       transform: none;
       background: rgba(255, 255, 255, 0.1);
     }
+
+    /* Simple version CSS */
+    .storage-simple {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 9px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .storage-dots {
+      display: flex;
+      gap: 2px;
+    }
+
+    .storage-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .storage-dot.active {
+      background: #3AE474;
+    }
+
+    .nav-item.active .storage-dot {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-item.active .storage-dot.active {
+      background: #3AE474;
+      box-shadow: 0 0 4px #3AE474;
+    }
   </style>
 </head>
 
@@ -1641,9 +1676,21 @@
       </div>
 
       <nav class="sidebar-nav">
-        <div class="nav-item active">
-          <i class="bi bi-folder-fill"></i>
-          <span>Files</span>
+        <div class="nav-item active" id="filesNavItem">
+          <div class="nav-item-content">
+            <i class="bi bi-folder-fill"></i>
+            <div class="nav-item-text">
+              <span>Files</span>
+              <div class="storage-info">
+                <div class="storage-progress">
+                  <div class="storage-progress-bar" id="storageProgressBar">
+                    <div class="storage-progress-fill" id="storageProgressFill"></div>
+                  </div>
+                  <div class="storage-text" id="storageText">Loading...</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="nav-item" id="logoutBtn">
           <i class="bi bi-box-arrow-right"></i>
@@ -1842,9 +1889,8 @@
           { regex: /<\/?[a-zA-Z][a-zA-Z0-9:-]*\b/g, className: 'syntax-html-tag' },
           { regex: /[a-zA-Z-]+(?=\s*=\s*["'])/g, className: 'syntax-html-attribute' },
           { regex: /("([^"\\]|\\.)*"|'([^'\\]|\\.)*')/g, className: 'syntax-html-string' },
-          {
-            regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
-              { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
+          { regex: /<!--[\s\S]*?-->/g, className: 'syntax-comment' },
+          { regex: /&[a-zA-Z]+;|&#\d+;|&#x[0-9a-fA-F]+;/g, className: 'syntax-entity' }
         ]
       },
 
@@ -2306,6 +2352,7 @@
           loginSection.style.display = 'none';
           fileExplorer.classList.add('show');
           loadDirectory('/');
+          calculateStorageUsage()
         } else {
           showError('Invalid username or password');
           credentials = null;
@@ -2624,6 +2671,48 @@
       );
     }
 
+    // Add these variables
+    let storageCache = {
+      timestamp: 0,
+      value: 0,
+      ttl: 5 * 60 * 1000 // 5 minutes cache
+    };
+
+    // Optimized storage calculation
+    async function getStorageUsageOptimized() {
+      const now = Date.now();
+
+      // Return cached value if still valid
+      if (storageCache.timestamp && (now - storageCache.timestamp) < storageCache.ttl) {
+        return storageCache.value;
+      }
+
+      // Calculate fresh value
+      const usage = await calculateStorageUsage();
+      storageCache = {
+        timestamp: now,
+        value: usage,
+        ttl: 5 * 60 * 1000
+      };
+
+      return usage;
+    }
+
+    // Call this periodically or after file operations
+    function updateStoragePeriodically() {
+      setInterval(async () => {
+        await calculateStorageUsage();
+        updateStorageDisplay();
+      }, 300000); // Update every 5 minutes
+    }
+
+    // Call after file uploads/downloads/deletions
+    async function updateStorageAfterOperation() {
+      storageCache.timestamp = 0; // Invalidate cache
+      await calculateStorageUsage();
+      updateStorageDisplay();
+    }
+
     // Handle file upload
     async function handleFileUpload(event) {
       const files = Array.from(event.target.files);
@@ -2743,6 +2832,10 @@
 
               if (!response.ok && response.status !== 405) {
                 console.warn(`Failed to create directory: ${currentDir}`);
+              }
+
+              if (response.ok) {
+                  await updateStorageAfterOperation();
               }
             } catch (error) {
               console.warn(`Error creating directory: ${currentDir}`, error);
